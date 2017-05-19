@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_activity_publish"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    tools:context="com.myschool.schoolcircle.ui.activity.school.activitys.PublishActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_publish_activity"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/colorPrimary"
+        android:elevation="@dimen/elevation_height"
+        app:title="@string/publish_activity"
+        app:titleTextColor="@color/white"
+        app:theme="@style/ToolbarTheme"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tb_publish_activity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:elevation="@dimen/low_elevation_height">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tv_theme"
+                        android:text="主题"
+                        android:textSize="@dimen/size_txt_title_small"
+                        android:textColor="@color/txt_black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="@dimen/margin_16"/>
+
+                    <EditText
+                        android:id="@+id/et_activity_theme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="24"
+                        android:singleLine="true"
+                        android:layout_toRightOf="@id/tv_theme"
+                        android:layout_marginRight="@dimen/margin_16"
+                        android:layout_centerVertical="true"
+                        android:background="@color/white"
+                        android:hint="主题不超过24个字"
+                        android:textSize="@dimen/size_txt_title_small"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider_gray"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_describe"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_weight="2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/tv_describe"
+                            android:text="描述"
+                            android:textSize="@dimen/size_txt_title_small"
+                            android:textColor="@color/txt_black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_16"
+                            android:layout_marginBottom="@dimen/margin_8"/>
+
+                        <TextView
+                            android:id="@+id/tv_num"
+                            android:text="0/75字"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_margin="@dimen/margin_8"/>
+
+                        <EditText
+                            android:id="@+id/et_activity_describe"
+                            android:hint="详细描述活动内容，有助于吸引更多人关注哦~"
+                            android:textSize="@dimen/size_txt_title_small"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@id/tv_describe"
+                            android:layout_above="@id/tv_num"
+                            android:layout_marginLeft="@dimen/margin_16"
+                            android:gravity="top"
+                            android:maxLength="75"
+                            android:background="@color/white"/>
+                    </RelativeLayout>
+
+                    <ImageView
+                        android:id="@+id/iv_activity_picture"
+                        android:layout_weight="1.5"
+                        android:layout_width="0dp"
+                        android:layout_height="200dp"
+                        android:padding="@dimen/margin_6"
+                        android:layout_marginRight="@dimen/margin_16"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/ic_add_image"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin_16"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginBottom="@dimen/size_72"
+                android:background="@color/white"
+                android:elevation="@dimen/low_elevation_height">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin_16"
+                    android:paddingRight="@dimen/margin_16">
+
+                    <TextView
+                        android:id="@+id/tv_activity_person_number"
+                        android:text="人数"
+                        android:textColor="@color/txt_black"
+                        android:textSize="@dimen/size_txt_title_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:layout_marginBottom="@dimen/margin_16"/>
+
+                    <EditText
+                        android:id="@+id/et_activity_number"
+                        android:hint="活动人数不超过99人"
+                        android:textSize="@dimen/size_txt_title_small"
+                        android:lines="1"
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@id/tv_activity_person_number"
+                        android:layout_marginLeft="@dimen/margin_16"
+                        android:background="@color/white"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider_gray"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin_16"
+                    android:paddingRight="@dimen/margin_16">
+
+                    <TextView
+                        android:id="@+id/tv_activity_place"
+                        android:text="地点"
+                        android:textColor="@color/txt_black"
+                        android:textSize="@dimen/size_txt_title_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:layout_marginBottom="@dimen/margin_16"/>
+
+                    <EditText
+                        android:id="@+id/et_activity_place"
+                        android:hint="活动地点不超过30个字"
+                        android:textSize="@dimen/size_txt_title_small"
+                        android:singleLine="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:maxLength="30"
+                        android:layout_toRightOf="@id/tv_activity_place"
+                        android:layout_marginLeft="@dimen/margin_16"
+                        android:background="@color/white"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider_gray"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin_16"
+                    android:paddingRight="@dimen/margin_16">
+
+                    <TextView
+                        android:id="@+id/tv_begin"
+                        android:text="开始"
+                        android:textColor="@color/txt_black"
+                        android:textSize="@dimen/size_txt_title_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:layout_marginBottom="@dimen/margin_16"/>
+
+                    <TextView
+                        android:id="@+id/tv_date_begin"
+                        android:hint="日期"
+                        android:textSize="@dimen/size_txt_title_small"
+                        android:singleLine="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@id/tv_begin"
+                        android:layout_marginLeft="@dimen/margin_16"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:id="@+id/tv_time_begin"
+                        android:hint="时间"
+                        android:textSize="@dimen/size_txt_title_small"
+                        android:singleLine="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@id/tv_date_begin"
+                        android:layout_marginLeft="@dimen/margin_24"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/divider_gray"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/margin_16"
+                    android:paddingRight="@dimen/margin_16">
+
+                    <TextView
+                        android:id="@+id/tv_end"
+                        android:text="结束"
+                        android:textColor="@color/txt_black"
+                        android:textSize="@dimen/size_txt_title_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_16"
+                        android:layout_marginBottom="@dimen/margin_16"/>
+
+                    <TextView
+                        android:id="@+id/tv_date_end"
+                        android:hint="日期"
+                        android:textSize="@dimen/size_txt_title_small"
+                        android:singleLine="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@id/tv_end"
+                        android:layout_marginLeft="@dimen/margin_16"
+                        android:layout_centerVertical="true"/>
+
+                    <TextView
+                        android:id="@+id/tv_time_end"
+                        android:hint="时间"
+                        android:textSize="@dimen/size_txt_title_small"
+                        android:singleLine="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_toRightOf="@id/tv_date_end"
+                        android:layout_marginLeft="@dimen/margin_24"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</RelativeLayout>

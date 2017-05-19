@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/header_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:orientation="vertical"
+        android:visibility="gone"/>
+
+    <ViewStub
+        android:id="@+id/loading_viewStub"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:layout="@layout/view_empty_loading_frame"
+        android:visibility="gone"/>
+
+    <ViewStub
+        android:id="@+id/empty_viewStub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="45.0dip"
+        android:layout_marginRight="45.0dip"
+        android:layout="@layout/view_empty_empty_frame"
+        android:visibility="gone"/>
+
+    <ViewStub
+        android:id="@+id/error_viewStub"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout="@layout/view_empty_error_frame"
+        android:visibility="gone"/>
+</merge>

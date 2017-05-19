@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_activity_all"
+        android:title="全部活动"
+        android:orderInCategory="1"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_activity_my_school"
+        android:title="只看本校"
+        android:orderInCategory="2"
+        app:showAsAction="never"/>
+</menu>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_dynamic_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/tb_dynamic_detail"
+            android:background="@color/colorPrimary"
+            android:elevation="@dimen/elevation_height"
+            style="@style/ToolbarTheme"
+            app:theme="@style/ToolbarTheme"
+            app:title="动态详情"
+            app:titleTextColor="@color/white"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_input_dy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_alignParentBottom="true"
+            android:elevation="@dimen/elevation_height">
+
+            <EditText
+                android:id="@+id/et_input"
+                android:hint="说点什么..."
+                android:textSize="@dimen/size_txt_chat_body"
+                android:maxLength="100"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/size_48"
+                android:paddingTop="@dimen/margin_4"
+                android:paddingBottom="@dimen/margin_4"
+                android:paddingLeft="@dimen/margin_16"
+                android:paddingRight="@dimen/margin_16"
+                android:layout_marginRight="@dimen/margin_64"
+                android:layout_centerVertical="true"
+                android:background="@color/white"/>
+        </RelativeLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/srl_detail_dy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/rl_input_dy"
+            android:layout_below="@id/tb_dynamic_detail">
+
+            <com.myschool.schoolcircle.widget.LoadListView
+                android:id="@+id/lv_dynamic_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bg_gray"
+                android:dividerHeight="1px"/>
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <View
+            android:id="@+id/v_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:layout_above="@id/rl_input_dy"/>
+    </RelativeLayout>
+
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/margin_16"
+        android:src="@mipmap/ic_send_white_48dp"
+        app:layout_anchorGravity="top|right"
+        app:layout_anchor="@id/rl_input_dy"
+        app:fabSize="normal"
+        android:visibility="gone"/>
+</android.support.design.widget.CoordinatorLayout>

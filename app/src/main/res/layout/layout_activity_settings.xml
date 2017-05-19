@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_settings"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical"
+    tools:context="com.myschool.schoolcircle.ui.activity.concact.group.CreateGroup">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_settings"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/colorPrimary"
+        android:elevation="@dimen/elevation_height"
+        app:theme="@style/ToolbarTheme"
+        app:title="设置"
+        app:titleTextColor="@color/white"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
+                android:background="@color/white"
+                android:elevation="@dimen/layout_elevation_height"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingBottom="@dimen/margin_16"
+                    android:paddingLeft="@dimen/margin_16"
+                    android:paddingTop="@dimen/margin_16">
+
+                    <ImageView
+                        android:id="@+id/iv_phone"
+                        android:layout_width="@dimen/size_24"
+                        android:layout_height="@dimen/size_24"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_phone_android_gray_48dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/margin_16"
+                        android:layout_toRightOf="@id/iv_phone"
+                        android:text="手机号"
+                        android:textColor="@color/txt_gray"
+                        android:textSize="@dimen/size_txt_title_small"/>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:layout_marginLeft="@dimen/size_56"
+                    android:background="@color/divider_gray"/>
+
+                <RelativeLayout
+                    android:id="@+id/rl_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingBottom="@dimen/margin_16"
+                    android:paddingLeft="@dimen/margin_16"
+                    android:paddingTop="@dimen/margin_16">
+
+                    <ImageView
+                        android:id="@+id/iv_password"
+                        android:layout_width="@dimen/size_24"
+                        android:layout_height="@dimen/size_24"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_https_gray_48dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/margin_16"
+                        android:layout_toRightOf="@id/iv_password"
+                        android:text="修改密码"
+                        android:textColor="@color/txt_gray"
+                        android:textSize="@dimen/size_txt_title_small"/>
+
+                    <TextView
+                        android:id="@+id/tv_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/margin_16"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_8"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
+                android:text="聊天"
+                android:textColor="@color/txt_light_gray"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/til_group_name"
+                android:background="@color/white"
+                android:elevation="@dimen/layout_elevation_height"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingBottom="@dimen/margin_16"
+                    android:paddingLeft="@dimen/margin_16"
+                    android:paddingTop="@dimen/margin_16">
+
+                    <ImageView
+                        android:id="@+id/iv_image1"
+                        android:layout_width="@dimen/size_24"
+                        android:layout_height="@dimen/size_24"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_notifications_gray_48dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/margin_16"
+                        android:layout_toRightOf="@id/iv_image1"
+                        android:text="通知"
+                        android:textColor="@color/txt_gray"
+                        android:textSize="@dimen/size_txt_title_small"/>
+
+                    <Switch
+                        android:id="@+id/swh_notification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/margin_16"
+                        android:checked="true"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:layout_marginLeft="@dimen/size_56"
+                    android:background="@color/divider_gray"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingBottom="@dimen/margin_16"
+                    android:paddingLeft="@dimen/margin_16"
+                    android:paddingTop="@dimen/margin_16">
+
+                    <ImageView
+                        android:id="@+id/iv_voice"
+                        android:layout_width="@dimen/size_24"
+                        android:layout_height="@dimen/size_24"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_volume_up_gray_48dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/margin_16"
+                        android:layout_toRightOf="@id/iv_voice"
+                        android:text="声音"
+                        android:textColor="@color/txt_gray"
+                        android:textSize="@dimen/size_txt_title_small"/>
+
+                    <Switch
+                        android:id="@+id/swh_voice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/margin_16"
+                        android:checked="true"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:layout_marginLeft="@dimen/size_56"
+                    android:background="@color/divider_gray"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingBottom="@dimen/margin_16"
+                    android:paddingLeft="@dimen/margin_16"
+                    android:paddingTop="@dimen/margin_16">
+
+                    <ImageView
+                        android:id="@+id/iv_image3"
+                        android:layout_width="@dimen/size_24"
+                        android:layout_height="@dimen/size_24"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_vibration_gray_48dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/margin_16"
+                        android:layout_toRightOf="@id/iv_image3"
+                        android:text="震动"
+                        android:textColor="@color/txt_gray"
+                        android:textSize="@dimen/size_txt_title_small"/>
+
+                    <Switch
+                        android:id="@+id/swh_vibrate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/margin_16"
+                        android:checked="true"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_8"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:layout_marginTop="@dimen/margin_16"
+                android:text="其他"
+                android:textColor="@color/txt_light_gray"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/til_group_name"
+                android:layout_marginBottom="@dimen/margin_4"
+                android:background="@color/white"
+                android:elevation="@dimen/layout_elevation_height"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingBottom="@dimen/margin_16"
+                    android:paddingLeft="@dimen/margin_16"
+                    android:paddingTop="@dimen/margin_16">
+
+                    <ImageView
+                        android:id="@+id/iv_shack"
+                        android:layout_width="@dimen/size_24"
+                        android:layout_height="@dimen/size_24"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_sms_failed_gray_48dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/margin_16"
+                        android:layout_toRightOf="@id/iv_shack"
+                        android:text="摇一摇刷新"
+                        android:textColor="@color/txt_gray"
+                        android:textSize="@dimen/size_txt_title_small"/>
+
+                    <Switch
+                        android:id="@+id/swh_shack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/margin_16"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:layout_marginLeft="@dimen/size_56"
+                    android:background="@color/divider_gray"/>
+
+                <RelativeLayout
+                    android:id="@+id/rl_clear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingBottom="@dimen/margin_16"
+                    android:paddingLeft="@dimen/margin_16"
+                    android:paddingTop="@dimen/margin_16">
+
+                    <ImageView
+                        android:id="@+id/iv_chat_history"
+                        android:layout_width="@dimen/size_24"
+                        android:layout_height="@dimen/size_24"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_chat_gray_48dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/margin_16"
+                        android:layout_toRightOf="@id/iv_chat_history"
+                        android:text="清除缓存"
+                        android:textColor="@color/txt_gray"
+                        android:textSize="@dimen/size_txt_title_small"/>
+
+                    <TextView
+                        android:id="@+id/tv_memory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/margin_16"
+                        android:textColor="@color/txt_light_gray"
+                        android:textSize="@dimen/size_txt_title_small"/>
+
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

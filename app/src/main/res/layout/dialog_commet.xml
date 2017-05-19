@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:text="标题"
+        android:textSize="@dimen/size_txt_title_normal"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_16"
+        android:layout_marginBottom="@dimen/margin_16"/>
+
+    <TextView
+        android:id="@+id/tv_look"
+        android:text="查看"
+        android:textSize="@dimen/size_txt_title_small"
+        android:textColor="@color/txt_gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_16"
+        android:layout_marginBottom="@dimen/margin_8"
+        android:foreground="?attr/selectableItemBackgroundBorderless"/>
+
+    <TextView
+        android:id="@+id/tv_answer"
+        android:text="回复"
+        android:textSize="@dimen/size_txt_title_small"
+        android:textColor="@color/txt_gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_16"
+        android:foreground="?attr/selectableItemBackgroundBorderless"/>
+
+    <TextView
+        android:id="@+id/tv_delete"
+        android:text="删除"
+        android:textSize="@dimen/size_txt_title_small"
+        android:textColor="@color/txt_gray"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/margin_16"
+        android:layout_marginBottom="@dimen/margin_8"
+        android:foreground="?attr/selectableItemBackgroundBorderless"/>
+</LinearLayout>

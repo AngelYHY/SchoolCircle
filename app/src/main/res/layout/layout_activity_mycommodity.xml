@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray">
+
+    <!--我的商品界面布局-->
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_mycommodity"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/colorPrimary"
+        android:elevation="@dimen/elevation_height"
+        app:theme="@style/ToolbarTheme"
+        app:title="@string/my_market"
+        app:titleTextColor="@color/white">
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_32"
+        android:orientation="vertical">
+
+        <!--我的订单-->
+        <RelativeLayout
+            android:id="@+id/rl_order"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="@dimen/margin_48"
+            android:background="@color/white"
+            android:foreground="?attr/selectableItemBackground">
+
+            <ImageButton
+                android:id="@+id/ib_order"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:background="@drawable/icon_information"
+                android:src="@mipmap/ic_shopping_basket_white_36dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:layout_toRightOf="@id/ib_order"
+                android:text="@string/my_order"
+                android:textSize="@dimen/margin_20"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/margin_16"
+                android:src="@mipmap/ic_chevron_right_white_48dp"/>
+        </RelativeLayout>
+
+        <!--我的上架-->
+        <RelativeLayout
+            android:id="@+id/rl_putaway"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="@dimen/margin_16"
+            android:background="@color/white"
+            android:foreground="?attr/selectableItemBackground">
+
+            <ImageButton
+                android:id="@+id/ib_putaway"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:background="@drawable/icon_information"
+                android:src="@mipmap/ic_shopping_basket_white_36dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:layout_toRightOf="@id/ib_putaway"
+                android:text="@string/my_myputaway"
+                android:textSize="@dimen/margin_20"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/margin_16"
+                android:src="@mipmap/ic_chevron_right_white_48dp"/>
+        </RelativeLayout>
+
+        <!--下单通知-->
+        <RelativeLayout
+            android:id="@+id/rl_inform"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:layout_marginTop="@dimen/margin_16"
+            android:background="@color/white"
+            android:foreground="?attr/selectableItemBackground">
+
+            <ImageButton
+                android:id="@+id/ib_inform"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:background="@drawable/icon_information"
+                android:src="@mipmap/ic_shopping_basket_white_36dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:layout_toRightOf="@id/ib_inform"
+                android:text="@string/my_inform"
+                android:textSize="@dimen/margin_20"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/margin_16"
+                android:src="@mipmap/ic_chevron_right_white_48dp"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

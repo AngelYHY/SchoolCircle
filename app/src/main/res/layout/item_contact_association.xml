@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="128dp"
+    android:paddingLeft="@dimen/margin_12"
+    android:paddingRight="@dimen/margin_12"
+    android:paddingBottom="@dimen/margin_12">
+
+    <com.myschool.schoolcircle.lib.CircleImageView
+        android:id="@+id/iv_association_head"
+        android:src="@mipmap/ic_launcher"
+        android:layout_gravity="center_vertical"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="@dimen/margin_12"/>
+
+    <TextView
+        android:id="@+id/tv_association_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/iv_association_head"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_marginLeft="@dimen/margin_12"
+        android:text="社团名"
+        android:textColor="@color/txt_black"
+        android:textSize="@dimen/size_txt_title_small"
+        android:ellipsize="marquee"/>
+
+    <TextView
+        android:id="@+id/tv_association_information"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/iv_association_head"
+        android:layout_below="@id/tv_association_name"
+        android:layout_marginLeft="@dimen/margin_12"
+        android:layout_marginTop="@dimen/margin_12"
+        android:text="[最新通知]"
+        android:textColor="@color/txt_gray"
+        android:textSize="@dimen/size_txt_body"
+        android:ellipsize="marquee"/>
+</RelativeLayout>

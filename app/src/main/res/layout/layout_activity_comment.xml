@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_comment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_activity_detail"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/colorPrimary"
+        android:elevation="@dimen/elevation_height"
+        app:title="全部留言"
+        app:titleTextColor="@color/white"
+        app:theme="@style/ToolbarTheme"/>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl_comment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tb_activity_detail"
+        android:layout_above="@+id/rl_input">
+
+        <com.myschool.schoolcircle.widget.LoadListView
+            android:id="@+id/lv_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/bg_gray"
+            android:dividerHeight="1px"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
+        android:elevation="@dimen/elevation_height"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btn_send"
+            android:text="回复"
+            android:textColor="@color/white"
+            android:layout_width="@dimen/size_small_button_width"
+            android:layout_height="@dimen/size_small_button_height"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/margin_8"
+            android:background="@drawable/button_shape"/>
+
+        <EditText
+            android:id="@+id/et_input"
+            android:hint="说点什么..."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_8"
+            android:layout_toLeftOf="@+id/btn_send"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+</RelativeLayout>

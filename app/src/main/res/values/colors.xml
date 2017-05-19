@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0288d1</color>
+    <color name="colorPrimaryDark">#0277bd</color>
+    <color name="colorAccent">#ffab00</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="white">#ffffff</color>
+    <color name="alpha_white">#49ffffff</color>
+    <color name="black">#000000</color>
+    <color name="red">#ff403c</color>
+    <color name="green_400">#2baf2b</color>
+    <color name="blue_light_50">#e1f5fe</color>
+    <color name="blue_light_200">#4fc3f7</color>
+    <color name="blue_light_500">#03a9f4</color>
+    <color name="blue_light_600">#039be5</color>
+    <color name="blue_light_700">#0288d1</color>
+    <color name="blue_light_800">#0277bd</color>
+    <color name="blue_light_900">#01579b</color>
+    <color name="yellow_400">#ffc400</color>
+    <color name="yellow_700">#ffab00</color>
+
+    <color name="blue_50">#e7e9fd</color>
+    <color name="blue_200">#d0d9ff</color>
+    <color name="blue_500">#afbfff</color>
+    <color name="blue_600">#91a7ff</color>
+    <color name="blue_700">#5677fc</color>
+    <color name="blue_800">#3b50ce</color>
+    <color name="blue_900">#2a36b1</color>
+
+    <color name="primary_dark">#5d4037</color>
+    <color name="primary">#795548</color>
+    <color name="primary_light">#d7ccc8</color>
+    <color name="orange">#ff8200</color>
+
+    <color name="gray">#ccc</color>
+    <color name="pink">#e91e63</color>
+
+    <color name="orange_light">#ff9800</color>
+    <color name="orange_dark">#f57c00</color>
+    <color name="red_light">#e51c23</color>
+    <color name="red_dark">#d01716</color>
+    <color name="green_light">#259b24</color>
+    <color name="green_dark">#0a7e07</color>
+    <color name="grey_light">#607d8b</color>
+    <color name="grey_dark">#455a64</color>
+    <color name="teal_light">#009688</color>
+    <color name="teal_dark">#00796b</color>
+    <color name="purple_light">#673ab7</color>
+    <color name="purple_dark">#512da8</color>
+
+    <color name="txt_black">#232323</color>
+    <color name="txt_gray">#565656</color>
+    <color name="txt_light_gray">#898989</color>
+
+    <color name="bg_gray">#f2f2f2</color>
+    <color name="bg_gray_dark">#cdcdcd</color>
+    <color name="bg_agray">#49dddddd</color>
+    <color name="bg_gray_pressed">#e8e8e8</color>
+    <color name="txt_at_blue">#507daf</color>
+    <color name="bg_gray_bar">#f9f9f9</color>
+    <color name="divider_gray">#d7d7d7</color>
+    <color name="vifrification">#00000000</color>
+    <color name="result_view">#60000000</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="possible_result_points">#c0ffff00</color>
+</resources>

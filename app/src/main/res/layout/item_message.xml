@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:foreground="?attr/selectableItemBackgroundBorderless">
+
+        <com.myschool.schoolcircle.lib.CircleImageView
+            android:id="@+id/civ_avatar"
+            android:src="@mipmap/ic_head"
+            android:layout_gravity="center_vertical"
+            android:layout_width="@dimen/normal_head_size"
+            android:layout_height="@dimen/normal_head_size"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginBottom="@dimen/margin_8"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_marginRight="@dimen/margin_16"/>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_unread_num"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:minWidth="22dp"
+            app:contentPadding="@dimen/margin_4"
+            app:cardBackgroundColor="@color/red"
+            app:cardElevation="0dp"
+            app:cardCornerRadius="11dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@id/civ_avatar"
+            android:layout_marginRight="@dimen/margin_16"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_unread_num"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:text="未知"
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/size_txt_title_small"
+            android:singleLine="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/civ_avatar"
+            android:layout_alignTop="@id/civ_avatar"/>
+
+        <ImageView
+            android:id="@+id/iv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/civ_avatar"
+            android:layout_alignBottom="@id/civ_avatar"
+            android:layout_marginRight="@dimen/margin_8"
+            android:src="@mipmap/ic_textsms_gray_18dp"/>
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:text="message"
+            android:textColor="@color/txt_gray"
+            android:textSize="@dimen/size_txt_body"
+            android:singleLine="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_type"
+            android:layout_alignBottom="@id/civ_avatar"
+            android:layout_toLeftOf="@+id/cv_unread_num"
+            android:layout_marginRight="@dimen/margin_16" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:text="20:58"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginRight="@dimen/margin_16"/>
+</RelativeLayout>

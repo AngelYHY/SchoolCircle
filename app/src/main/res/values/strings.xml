@@ -1,0 +1,131 @@
+<resources>
+    <string name="app_name">知校</string>
+    <string name="menu_user_name">这雨这屋这蜗牛</string>
+
+    <string name="username">用户名</string>
+    <string name="phone">手机号</string>
+    <string name="password">密码</string>
+    <string name="password_again">确认密码</string>
+    <string name="start_school_year">入学年份</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+
+    <string name="get_it">知道了</string>
+    <string name="register_success">注册成功</string>
+    <string name="register_fail">注册失败，用户名或手机号已被注册</string>
+    <string name="password_cannot_empty">密码不能为空</string>
+    <string name="prove_password_tip">两次输入的密码必须一致</string>
+    <string name="prove_login">用户名和密码不能为空</string>
+    <string name="server_link_fail">服务器连接失败</string>
+    <string name="server_no_respond">服务器未响应</string>
+    <string name="login_timeout">登录超时，服务器未响应</string>
+    <string name="register_timeout">注册超时，服务器未响应</string>
+    <string name="password_error">密码错误，请重新输入</string>
+    <string name="login_ing">登录中，请稍后...</string>
+    <string name="login_fail">登录失败</string>
+
+    <string name="draw_open">打开</string>
+    <string name="draw_close">关闭</string>
+
+    <string name="menu_mine">个人中心</string>
+    <string name="menu_settings">设置</string>
+    <string name="menu_about">关于</string>
+    <string name="menu_exit">退出</string>
+
+    <string name="alter">修改</string>
+    <string name="accept">确定</string>
+    <string name="cancel">取消</string>
+    <string name="refuse">拒绝</string>
+    <string name="agree">同意</string>
+
+    <string name="edit_mine_information">编辑个人信息</string>
+    <string name="edit_head_view">修改头像</string>
+    <string name="self_info">个人信息</string>
+    <string name="signature">个性签名</string>
+    <string name="hobbies">兴趣爱好</string>
+
+    <string name="alter_success">修改成功</string>
+    <string name="alter_fail">修改失败</string>
+    <string name="head_view_upload_success">头像上传成功</string>
+    <string name="head_view_upload_fail">头像上传失败</string>
+
+    <string name="real_name">名字</string>
+    <string name="gender">性别</string>
+    <string name="birthday">生日</string>
+    <string name="school_name">学校</string>
+
+    <string name="tab_message">消息</string>
+    <string name="tab_contact">校友</string>
+    <string name="tab_dynamic">动态</string>
+    <string name="tab_activity">活动</string>
+
+    <string name="new_friend">新朋友</string>
+    <string name="association">社团</string>
+    <string name="specialty">专业</string>
+    <string name="group">群组</string>
+
+    <string name="dynamic">动态</string>
+    <string name="activity">活动</string>
+    <string name="information">资讯</string>
+    <string name="market">跳蚤市场</string>
+    <string name="image">图片</string>
+
+    <string name="dynamic_send">发布动态</string>
+
+    <string name="publish_activity">发布活动</string>
+    <string name="publish_info_cannot_be_empty">需要将活动信息填写完整才能发布。</string>
+    <string name="publish_activity_success">发布成功</string>
+    <string name="publish_activity_fail">发布失败</string>
+
+    <string name="about_me">我的动态</string>
+    <string name="my_dynamic">我的动态</string>
+    <string name="my_activity">我的活动</string>
+    <string name="my_market">我的商品</string>
+    <string name="commodity_details">商品详情</string>
+    <string name="my_order">我的订单</string>
+    <string name="my_myputaway">我的上架</string>
+    <string name="my_putawaycommodity">上架商品</string>
+    <string name="my_inform">下单通知</string>
+    <string name="all_activity">所有活动</string>
+    <string name="my_join_activity">我的参与</string>
+    <string name="my_publish_activity">我的发布</string>
+
+    <string name="delete">删除</string>
+    <string name="add">添加</string>
+
+    <string name="my_activity_join">我的报名</string>
+    <string name="my_activity_join_info">这里有关于你报名参加的活动，可以查看详情</string>
+    <string name="my_activity_create">我的发布</string>
+    <string name="my_activity_create_info">这里有关于你个人发布的活动，可以查看详情</string>
+    <string name="my_activity_">我的市场</string>
+
+    <string name="search">搜索</string>
+    <string name="add_friends">添加好友</string>
+    <string name="join_specialty">加入专业</string>
+    <string name="join_association">加入社团</string>
+    <string name="create_specialty">创建专业</string>
+    <string name="create_association">创建社团</string>
+    <string name="create_group">创建群组</string>
+    <string name="join_group">加入群组</string>
+
+    <string name="search_info">名字/手机号</string>
+    <string name="search_info_cannot_be_empty">搜索内容不能为空</string>
+    <string name="nothing_to_show">未搜索到任何校友信息</string>
+    <string name="search_fail">搜索失败</string>
+    <string name="add_friend_prove">你需要发送验证申请，等对方通过</string>
+    <string name="prove_info_cannot_be_empty">你需要填写验证信息才能发送</string>
+    <string name="send">发送</string>
+    <string name="send_success">发送成功</string>
+
+    <string name="add_success">添加成功</string>
+    <string name="add_fail">添加失败</string>
+
+    <string name="list">列表展示</string>
+    <string name="grid">网格展示</string>
+
+    <string name="str_recorder_normal">按住说话</string>
+    <string name="str_recorder_recording">松开发送</string>
+    <string name="str_recorder_cancel">松开取消</string>
+
+    <string name="chat_message_cannot_be_empty">要输入内容后才能发送</string>
+</resources>

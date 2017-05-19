@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="116dp">
+
+    <ImageView
+        android:id="@+id/iv_folder_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:padding="18dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher"
+        android:background="@drawable/ic_crop_original_white_48dp"/>
+
+    <TextView
+        android:id="@+id/tv_image_count"
+        android:text="数量"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="16dp"/>
+
+    <TextView
+        android:id="@+id/tv_folder_name"
+        android:text="文件夹名"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/tv_image_count"
+        android:layout_toRightOf="@id/iv_folder_image"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"/>
+</RelativeLayout>

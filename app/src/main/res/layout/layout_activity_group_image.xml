@@ -1,0 +1,67 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/colorPrimary"
+        android:elevation="@dimen/elevation_height"
+        app:title="@string/image"
+        app:titleTextColor="@color/white"
+        app:theme="@style/ToolbarTheme"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_48"
+        android:layout_alignParentBottom="true"
+        android:elevation="@dimen/elevation_height"
+        android:gravity="center_vertical"
+        android:background="@color/white"
+        android:clipChildren="true">
+
+        <TextView
+            android:id="@+id/tv_folder_name"
+            android:text="所有图片"
+            android:textColor="@color/txt_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"/>
+
+        <TextView
+            android:id="@+id/tv_count"
+            android:text="张"
+            android:textColor="@color/txt_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin_16"/>
+
+        <TextView
+            android:id="@+id/tv_image_count"
+            android:text="100"
+            android:textColor="@color/txt_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/tv_count"/>
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/gv_image_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tb_image"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
+        android:cacheColorHint="@android:color/transparent"
+        android:listSelector="@android:color/transparent"
+        android:horizontalSpacing="3dp"
+        android:verticalSpacing="3dp"
+        android:layout_above="@id/rl_bottom">
+    </GridView>
+</RelativeLayout>

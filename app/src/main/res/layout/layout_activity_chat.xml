@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_chat"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_chat"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="@dimen/elevation_height"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/ll_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/elevation_height"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
+        android:background="@color/white">
+
+        <ImageButton
+            android:id="@+id/ib_audio"
+            android:layout_width="@dimen/size_small_circle_button"
+            android:layout_height="@dimen/size_small_circle_button"
+            android:layout_marginLeft="@dimen/margin_8"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginBottom="@dimen/margin_4"
+            android:src="@mipmap/ic_mic_white_48dp"
+            android:background="@drawable/icon_audio"/>
+
+        <Button
+            android:id="@+id/btn_send"
+            android:layout_width="68dp"
+            android:layout_height="36dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin_8"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginBottom="@dimen/margin_4"
+            android:text="@string/send"
+            android:textColor="@color/white"
+            android:background="@drawable/button_shape"/>
+
+        <ImageButton
+            android:id="@+id/ib_image"
+            android:layout_width="@dimen/size_small_circle_button"
+            android:layout_height="@dimen/size_small_circle_button"
+            android:layout_toLeftOf="@+id/btn_send"
+            android:layout_marginRight="@dimen/margin_8"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginBottom="@dimen/margin_4"
+            android:src="@mipmap/ic_add_white_48dp"
+            android:background="@drawable/icon_audio">
+        </ImageButton>
+
+        <EditText
+            android:id="@+id/et_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxHeight="@dimen/size_72"
+            android:hint="说点什么..."
+            android:textSize="@dimen/size_txt_chat_body"
+            android:layout_toRightOf="@+id/ib_audio"
+            android:layout_toLeftOf="@+id/ib_image"
+            android:layout_marginTop="@dimen/margin_4"
+            android:layout_marginLeft="@dimen/margin_8"
+            android:layout_marginRight="@dimen/margin_8"/>
+    </RelativeLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl_chat"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tb_chat"
+        android:layout_above="@id/ll_input">
+
+        <ListView
+            android:id="@+id/lv_chat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_voice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/elevation_height"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
+        android:background="@color/white"
+        android:visibility="invisible">
+
+        <ImageButton
+            android:id="@+id/ib_input"
+            android:layout_width="@dimen/size_small_circle_button"
+            android:layout_height="@dimen/size_small_circle_button"
+            android:layout_marginLeft="@dimen/margin_8"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginBottom="@dimen/margin_4"
+            android:src="@mipmap/ic_mode_edit_white_48dp"
+            android:background="@drawable/icon_audio"/>
+
+        <ImageButton
+            android:id="@+id/ib_voice_image"
+            android:layout_width="@dimen/size_small_circle_button"
+            android:layout_height="@dimen/size_small_circle_button"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin_8"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginBottom="@dimen/margin_4"
+            android:src="@mipmap/ic_add_white_48dp"
+            android:background="@drawable/icon_audio">
+        </ImageButton>
+
+        <com.myschool.schoolcircle.widget.AudioRecorderButton
+            android:id="@+id/btn_send_voice"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_small_button_height"
+            android:text="按住说话"
+            android:textColor="@color/white"
+            android:background="@drawable/button_shape"
+            android:layout_toLeftOf="@+id/ib_voice_image"
+            android:layout_toRightOf="@+id/ib_input"
+            android:layout_marginBottom="@dimen/margin_6"
+            android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginLeft="@dimen/margin_8"
+            android:layout_marginRight="@dimen/margin_8"/>
+    </RelativeLayout>
+
+</RelativeLayout>

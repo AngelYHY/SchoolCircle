@@ -1,0 +1,72 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="size_txt_main_radio">10sp</dimen>
+    <dimen name="size_txt_small_tip">12sp</dimen>
+    <dimen name="size_txt_body">14sp</dimen>
+    <dimen name="size_txt_message">18sp</dimen>
+    <dimen name="size_txt_chat_body">16sp</dimen>
+    <dimen name="size_txt_title_small">16sp</dimen>
+    <dimen name="size_txt_title_normal">20sp</dimen>
+    <dimen name="size_txt_title_big">24sp</dimen>
+    <dimen name="size_txt_28">28sp</dimen>
+    <dimen name="size_txt_32">32sp</dimen>
+    <dimen name="size_txt_34">34sp</dimen>
+    <dimen name="size_txt_45">45sp</dimen>
+    <dimen name="size_txt_56">56sp</dimen>
+    <dimen name="size_txt_112">112sp</dimen>
+
+    <dimen name="margin_2">2dp</dimen>
+    <dimen name="margin_4">4dp</dimen>
+    <dimen name="margin_5">5dp</dimen>
+    <dimen name="margin_6">6dp</dimen>
+    <dimen name="margin_8">8dp</dimen>
+    <dimen name="margin_12">12dp</dimen>
+    <dimen name="margin_14">14dp</dimen>
+    <dimen name="margin_16">16dp</dimen>
+    <dimen name="margin_20">20dp</dimen>
+    <dimen name="margin_24">24dp</dimen>
+    <dimen name="margin_32">32dp</dimen>
+    <dimen name="margin_35">35dp</dimen>
+    <dimen name="margin_40">40dp</dimen>
+    <dimen name="margin_42">42dp</dimen>
+    <dimen name="margin_45">45dp</dimen>
+    <dimen name="margin_48">48dp</dimen>
+    <dimen name="margin_56">56dp</dimen>
+    <dimen name="margin_64">64dp</dimen>
+
+    <dimen name="head_size">64dp</dimen>
+    <dimen name="big_head_size">72dp</dimen>
+    <dimen name="normal_head_size">48dp</dimen>
+    <dimen name="small_head_size">40dp</dimen>
+
+    <dimen name="card_radius">3dp</dimen>
+
+    <dimen name="menu_head_height">180dp</dimen>
+    <dimen name="toolbar_height">56dp</dimen>
+    <dimen name="divider_height">1px</dimen>
+    <dimen name="elevation_height">5dp</dimen>
+    <dimen name="low_elevation_height">2dp</dimen>
+    <dimen name="layout_elevation_height">1dp</dimen>
+
+    <dimen name="size_small_circle_button">36dp</dimen>
+    <dimen name="size_circle_button">48dp</dimen>
+
+    <dimen name="size_small_button_width">56dp</dimen>
+    <dimen name="size_small_button_height">36dp</dimen>
+
+    <dimen name="size_2">2dp</dimen>
+    <dimen name="size_12">12dp</dimen>
+    <dimen name="size_16">16dp</dimen>
+    <dimen name="size_24">24dp</dimen>
+    <dimen name="size_32">32dp</dimen>
+    <dimen name="size_40">40dp</dimen>
+    <dimen name="size_48">48dp</dimen>
+    <dimen name="size_56">56dp</dimen>
+    <dimen name="size_64">64dp</dimen>
+    <dimen name="size_72">72dp</dimen>
+    <dimen name="size_124">124dp</dimen>
+
+</resources>

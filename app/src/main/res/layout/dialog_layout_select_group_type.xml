@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:text="创建群组"
+            android:textColor="@color/white"
+            android:textSize="@dimen/size_txt_title_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_16"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_personal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/margin_12"
+        android:paddingBottom="@dimen/margin_12"
+        android:layout_marginTop="@dimen/margin_16"
+        android:foreground="?attr/selectableItemBackground">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_person_gray_24dp"
+            android:layout_marginLeft="@dimen/margin_32"/>
+
+        <TextView
+            android:text="私人"
+            android:textSize="@dimen/size_txt_chat_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_16"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_specialty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/margin_12"
+        android:paddingBottom="@dimen/margin_12"
+        android:foreground="?attr/selectableItemBackground">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_person_gray_24dp"
+            android:layout_marginLeft="@dimen/margin_32"/>
+
+        <TextView
+            android:text="专业"
+            android:textSize="@dimen/size_txt_chat_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_16"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_association"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingTop="@dimen/margin_12"
+        android:paddingBottom="@dimen/margin_12"
+        android:layout_marginBottom="@dimen/margin_16"
+        android:foreground="?attr/selectableItemBackground">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_person_gray_24dp"
+            android:layout_marginLeft="@dimen/margin_32"/>
+
+        <TextView
+            android:text="社团"
+            android:textSize="@dimen/size_txt_chat_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_16"/>
+    </LinearLayout>
+</LinearLayout>

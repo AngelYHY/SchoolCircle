@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--<item-->
+        <!--android:id="@+id/menu_dynamic_about_me"-->
+        <!--android:title="@string/about_me"-->
+        <!--android:icon="@mipmap/ic_person_white_48dp"-->
+        <!--android:orderInCategory="1"-->
+        <!--app:showAsAction="always"/>-->
+
+    <item
+        android:id="@+id/menu_dynamic_all"
+        android:title="全部动态"
+        android:orderInCategory="1"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/menu_dynamic_my_school"
+        android:title="只看本校"
+        android:orderInCategory="1"
+        app:showAsAction="never"/>
+</menu>

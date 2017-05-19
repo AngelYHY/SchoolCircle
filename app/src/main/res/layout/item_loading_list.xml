@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cv_activity"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <android.support.v4.widget.ContentLoadingProgressBar
+            android:id="@+id/clp_loading"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:layout_marginRight="@dimen/margin_16"
+            style="?android:progressBarStyleInverse"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_loading"
+            android:text="没有更多留言"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_24"
+            android:layout_marginBottom="@dimen/margin_24"/>
+    </LinearLayout>
+</FrameLayout>
+

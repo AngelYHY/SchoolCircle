@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/coor_dynamic"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl_dynamic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_dynamic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/toolbar_height"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_dynamic"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/colorPrimary"
+        android:elevation="@dimen/elevation_height"
+        app:theme="@style/ToolbarTheme"
+        app:title="@string/dynamic"
+        app:titleTextColor="@color/white"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_create_dynamic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchorGravity="top|right"
+        app:layout_anchor="@id/rl_input"
+        android:layout_marginRight="@dimen/margin_16"
+        android:src="@mipmap/ic_add_white_48dp"
+        app:fabSize="normal"/>
+
+    <View
+        android:id="@+id/v_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/rl_input"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/size_48"
+        android:elevation="@dimen/elevation_height"
+        android:visibility="invisible">
+
+        <EditText
+            android:id="@+id/et_input"
+            android:hint="说点什么..."
+            android:textSize="@dimen/size_txt_chat_body"
+            android:maxLength="100"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/size_48"
+            android:paddingTop="@dimen/margin_4"
+            android:paddingBottom="@dimen/margin_4"
+            android:paddingLeft="@dimen/margin_16"
+            android:paddingRight="@dimen/margin_16"
+            android:layout_marginRight="@dimen/margin_64"
+            android:layout_centerVertical="true"
+            android:background="@color/white"/>
+    </RelativeLayout>
+
+    <uk.co.senab.photoview.PhotoView
+        android:id="@+id/photo_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+    </uk.co.senab.photoview.PhotoView>
+</android.support.design.widget.CoordinatorLayout>

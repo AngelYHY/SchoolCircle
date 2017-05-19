@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_edit_mine"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_gray">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_edit_mine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/colorPrimary"
+        android:elevation="@dimen/elevation_height"
+        app:title="@string/edit_mine_information"
+        app:titleTextColor="@color/white"
+        app:theme="@style/ToolbarTheme">
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/margin_16"
+                android:paddingBottom="@dimen/margin_16"
+                android:elevation="@dimen/layout_elevation_height"
+                style="@style/EditMineStyle">
+
+                <ImageView
+                    android:id="@+id/iv_head_view"
+                    android:layout_width="@dimen/head_size"
+                    android:layout_height="@dimen/head_size"
+                    android:src="@mipmap/ic_big_head"/>
+
+                <Button
+                    android:id="@+id/btn_edit_head_view"
+                    android:text="@string/edit_head_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_16"/>
+            </LinearLayout>
+
+            <TextView
+                android:text="@string/self_info"
+                android:textSize="@dimen/size_txt_title_small"
+                android:textColor="@color/txt_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginLeft="@dimen/margin_16"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/EditMineStyle"
+                android:layout_marginTop="@dimen/margin_16"
+                android:elevation="@dimen/layout_elevation_height">
+
+                <ImageView
+                    android:layout_width="@dimen/size_24"
+                    android:layout_height="@dimen/size_24"
+                    android:src="@mipmap/ic_account_box_white_48dp"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_real_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/margin_16">
+
+                    <EditText
+                        android:id="@+id/et_real_name"
+                        android:hint="@string/real_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <RadioGroup
+                    android:id="@+id/rg_gender"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="@dimen/margin_16">
+
+                    <RadioButton
+                        android:id="@+id/rb_boy"
+                        android:text="男"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+
+                    <RadioButton
+                        android:id="@+id/rb_girl"
+                        android:text="女"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+                </RadioGroup>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_birthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/margin_16"
+                android:paddingBottom="@dimen/margin_16"
+                android:elevation="@dimen/layout_elevation_height"
+                android:foreground="?attr/selectableItemBackground"
+                style="@style/EditMineStyle">
+
+                <ImageView
+                    android:layout_width="@dimen/size_24"
+                    android:layout_height="@dimen/size_24"
+                    android:src="@mipmap/ic_cake_white_48dp"/>
+
+                <TextView
+                    android:id="@+id/tv_birthday"
+                    android:text="@string/birthday"
+                    android:textSize="@dimen/size_txt_title_small"
+                    android:textColor="@color/txt_black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_16"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/EditMineStyle"
+                android:elevation="@dimen/layout_elevation_height">
+
+                <ImageView
+                    android:layout_width="@dimen/size_24"
+                    android:layout_height="@dimen/size_24"
+                    android:src="@mipmap/ic_location_city_white_48dp"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_school_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/margin_16">
+
+                    <EditText
+                        android:id="@+id/et_school_name"
+                        android:hint="@string/school_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/margin_16"
+                android:paddingBottom="@dimen/margin_16"
+                android:elevation="@dimen/layout_elevation_height"
+                android:foreground="?attr/selectableItemBackground"
+                style="@style/EditMineStyle">
+
+                <ImageView
+                    android:layout_width="@dimen/size_24"
+                    android:layout_height="@dimen/size_24"
+                    android:src="@mipmap/ic_date_range_white_48dp"/>
+
+                <TextView
+                    android:id="@+id/tv_start_school_year"
+                    android:text="@string/start_school_year"
+                    android:textSize="@dimen/size_txt_title_small"
+                    android:textColor="@color/txt_black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_16"/>
+            </LinearLayout>
+
+            <TextView
+                android:text="@string/signature"
+                android:textSize="@dimen/size_txt_title_small"
+                android:textColor="@color/txt_gray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginLeft="@dimen/margin_16"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginBottom="@dimen/margin_16"
+                android:elevation="@dimen/layout_elevation_height"
+                style="@style/EditMineStyle">
+
+                <ImageView
+                    android:layout_width="@dimen/size_24"
+                    android:layout_height="@dimen/size_24"
+                    android:src="@mipmap/ic_mode_edit_gray_48dp"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/til_signature"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/margin_16">
+
+                    <EditText
+                        android:id="@+id/et_signature"
+                        android:hint="@string/signature"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>
+

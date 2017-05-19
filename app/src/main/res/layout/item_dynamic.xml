@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_dynamic"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    app:cardCornerRadius="0dp"
+    android:layout_marginTop="@dimen/margin_4"
+    android:layout_marginBottom="@dimen/margin_4"
+    android:background="@color/white"
+    android:foreground="?attr/selectableItemBackground">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@mipmap/touxiang_test"
+            android:layout_margin="@dimen/margin_16"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/tv_real_name"
+            android:text="名字"
+            android:textSize="@dimen/size_txt_title_small"
+            android:textColor="@color/txt_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_head"
+            android:layout_alignTop="@id/iv_head" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2小时前"
+            android:textSize="@dimen/size_txt_small_tip"
+            android:textColor="@color/txt_light_gray"
+            android:layout_toRightOf="@id/iv_head"
+            android:layout_alignBottom="@id/iv_head"/>
+
+        <TextView
+            android:id="@+id/tv_school_name"
+            android:text="[福建师范大学闽南科技学院]"
+            android:textSize="@dimen/size_txt_small_tip"
+            android:textColor="@color/txt_light_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_alignBottom="@id/iv_head"
+            android:layout_toRightOf="@id/tv_time"
+            android:layout_marginLeft="@dimen/margin_8"/>
+
+        <TextView
+            android:id="@+id/tv_text_content"
+            android:text="夕阳的背后，月牙悄悄爬上了夜空。回家的归途，有谁在默默等候。"
+            android:textColor="@color/txt_gray"
+            android:textSize="@dimen/size_txt_title_small"
+            android:maxLines="4"
+            android:ellipsize="end"
+            android:layout_below="@id/iv_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_marginRight="@dimen/margin_16"
+            android:layout_marginBottom="@dimen/margin_16"/>
+
+        <com.lzy.ninegrid.NineGridView
+            android:id="@+id/ngv_dynamic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_text_content"
+            android:layout_marginLeft="@dimen/margin_12"
+            android:layout_marginRight="@dimen/margin_12"
+            android:layout_marginBottom="@dimen/margin_16"
+            app:ngv_gridSpacing="@dimen/margin_2"
+            app:ngv_mode="grid"
+            app:ngv_singleImageSize="200dp"/>
+
+        <CheckBox
+            android:id="@+id/cb_retransmission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/ngv_dynamic"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="@dimen/margin_16"
+            android:drawableLeft="@mipmap/ic_reply_gray_24dp"
+            android:drawablePadding="@dimen/margin_4"
+            android:button="@null"
+            android:background="@null"/>
+
+        <CheckBox
+            android:id="@+id/cb_like"
+            android:text="0"
+            android:textColor="@color/txt_light_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ngv_dynamic"
+            android:layout_toLeftOf="@id/cb_retransmission"
+            android:layout_marginRight="16dp"
+            android:drawableLeft="@drawable/icon_like"
+            android:drawablePadding="@dimen/margin_4"
+            android:button="@null"
+            android:background="@null"
+            android:checked="false"/>
+
+        <CheckBox
+            android:id="@+id/cb_comment"
+            android:text="0"
+            android:textColor="@color/txt_light_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ngv_dynamic"
+            android:layout_toLeftOf="@id/cb_like"
+            android:layout_marginRight="16dp"
+            android:drawableLeft="@mipmap/ic_chat_bubble_gray_24dp"
+            android:drawablePadding="@dimen/margin_4"
+            android:button="@null"
+            android:background="@null"
+            android:clickable="false"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

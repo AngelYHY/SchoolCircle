@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cv_aboutme"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/white"
+    android:foreground="?attr/selectableItemBackground"
+    android:layout_marginTop="@dimen/margin_4"
+    android:layout_marginBottom="@dimen/margin_4"
+    app:cardCornerRadius="0dp">
+
+    <RelativeLayout
+        android:id="@+id/rl_aboutme_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_aboutme_avater"
+            android:layout_width="@dimen/normal_head_size"
+            android:layout_height="@dimen/normal_head_size"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_marginRight="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_8"
+            android:layout_marginBottom="@dimen/margin_8"
+            android:src="@mipmap/ic_head"/>
+
+        <TextView
+            android:id="@+id/tv_aboutme_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/iv_aboutme_avater"
+            android:layout_toRightOf="@id/iv_aboutme_avater"
+            android:text="发布者"
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/size_16"/>
+
+        <TextView
+            android:id="@+id/tv_aboutme_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/iv_aboutme_avater"
+            android:layout_toRightOf="@id/iv_aboutme_avater"
+            android:text="时间"
+            android:textColor="@color/txt_gray"
+            android:textSize="@dimen/size_12"/>
+
+        <View
+            android:id="@+id/v1"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_below="@id/iv_aboutme_avater"
+            android:background="@color/divider_gray"/>
+
+        <LinearLayout
+            android:id="@+id/ll_aboutme_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/v1"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_dynamic_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="@dimen/margin_16"
+                android:layout_marginBottom="@dimen/margin_16"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:src="@mipmap/ic_photo_white_48dp"/>
+
+            <TextView
+                android:id="@+id/tv_dynamic_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_16"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:textColor="@color/txt_gray"
+                android:text="原文内容"
+                android:textSize="@dimen/size_txt_body"/>
+        </LinearLayout>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

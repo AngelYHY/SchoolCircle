@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/size_64"
+    android:background="@color/white"
+    android:foreground="?attr/selectableItemBackground"
+    android:gravity="center_vertical">
+
+    <ImageView
+        android:id="@+id/iv_person_head"
+        android:src="@mipmap/ic_big_head"
+        android:layout_width="@dimen/normal_head_size"
+        android:layout_height="@dimen/normal_head_size"
+        android:layout_marginLeft="@dimen/margin_16"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_16"
+        android:layout_marginRight="@dimen/margin_16"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/iv_person_head"
+        android:layout_alignTop="@id/iv_person_head"
+        android:layout_alignBottom="@id/iv_person_head">
+
+        <TextView
+            android:id="@+id/tv_person_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:text="name"
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/size_txt_title_small"
+            android:singleLine="true"/>
+
+        <ImageView
+            android:id="@+id/iv_signature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:src="@mipmap/ic_mode_edit_gray_18dp"/>
+
+        <TextView
+            android:id="@+id/tv_person_information"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_8"
+            android:layout_toRightOf="@id/iv_signature"
+            android:layout_alignParentBottom="true"
+            android:text="information"
+            android:textColor="@color/txt_gray"
+            android:textSize="@dimen/size_txt_body"
+            android:singleLine="true"/>
+    </RelativeLayout>
+</RelativeLayout>

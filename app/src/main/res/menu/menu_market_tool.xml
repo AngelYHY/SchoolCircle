@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--我的商品-->
+    <item
+        android:id="@+id/menu_my_market"
+        android:icon="@mipmap/ic_person_white_48dp"
+        android:orderInCategory="1"
+        android:title="@string/my_market"
+        app:showAsAction="always"/>
+
+    <!--列表显示-->
+    <item
+        android:id="@+id/menu_market_list"
+        android:orderInCategory="1"
+        android:title="@string/list"
+        app:showAsAction="never"/>
+
+    <!--网格显示-->
+    <item
+        android:id="@+id/menu_market_grid"
+        android:orderInCategory="2"
+        android:title="@string/grid"
+        app:showAsAction="never"/>
+</menu>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="62dp">
+
+    <com.myschool.schoolcircle.lib.CircleImageView
+        android:id="@+id/iv_person_head"
+        android:src="@mipmap/ic_launcher"
+        android:layout_gravity="center_vertical"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginLeft="@dimen/margin_16"
+        android:layout_centerVertical="true"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/iv_person_head"
+        android:orientation="vertical"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/tv_person_name"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="name"
+            android:textColor="@color/txt_black"
+            android:textSize="@dimen/size_txt_title_small"/>
+
+        <TextView
+            android:id="@+id/tv_person_information"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="information"
+            android:textColor="@color/txt_gray"
+            android:textSize="@dimen/size_txt_body"/>
+    </LinearLayout>
+</RelativeLayout>

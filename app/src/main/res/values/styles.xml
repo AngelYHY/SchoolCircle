@@ -1,0 +1,120 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="MainTabTextTheme" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/size_txt_small_tip</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="MineToolbarTextTheme" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textSize">@dimen/size_txt_28</item>
+    </style>
+
+    <style name="NoFocusedTextTheme" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textSize">@dimen/size_txt_body</item>
+        <item name="android:textColor">@color/txt_light_gray</item>
+    </style>
+
+    <!--主界面的单选按钮样式-->
+    <style name="MainRadioTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@drawable/text_main_radio_color</item>
+        <item name="android:textSize">@dimen/size_txt_main_radio</item>
+        <item name="android:button">@null</item>
+        <item name="android:background">@null</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
+    <!--联系人界面的单选按钮样式-->
+    <style name="ContactRadioTheme">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:paddingTop">@dimen/margin_12</item>
+        <item name="android:paddingBottom">@dimen/margin_12</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/txt_black</item>
+        <item name="android:textSize">@dimen/size_txt_body</item>
+        <item name="android:button">@null</item>
+        <item name="android:background">@null</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
+    <style name="ToolbarTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/toolbar_height</item>
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+
+    <style name="EditMineStyle">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingTop">@dimen/margin_8</item>
+        <item name="android:paddingLeft">@dimen/margin_16</item>
+        <item name="android:paddingRight">@dimen/margin_16</item>
+        <item name="android:paddingBottom">@dimen/margin_8</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="Theme_AudioDialog">
+        //背景透明
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowFrame">@null</item>
+        //是否是活动的
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        //弹出对话框时屏幕是否需要变暗
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="dir_popup_window_anim">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
+
+    <style name="CardTextContent">
+        <item name="android:textSize">@dimen/size_txt_body</item>
+        <item name="android:textColor">@color/txt_gray</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="CardTextTitle">
+        <item name="android:textSize">@dimen/size_txt_title_small</item>
+        <item name="android:textColor">@color/txt_black</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="CardCheckBoxImage">
+        <item name="android:textColor">@color/txt_light_gray</item>
+        <item name="android:button">@null</item>
+        <item name="android:background">@null</item>
+        <item name="android:clickable">false</item>
+    </style>
+
+    <style name="RadioButtonImage">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/txt_black</item>
+        <item name="android:button">@null</item>
+        <item name="android:background">@null</item>
+    </style>
+</resources>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cl_register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tb_register"
+        style="@style/ToolbarTheme"
+        app:title="@string/register"
+        app:titleTextColor="@color/white"
+        app:theme="@style/ToolbarTheme"
+        android:elevation="@dimen/elevation_height"
+        android:background="@color/colorPrimary">
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/toolbar_height"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/til_username"
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:layout_marginLeft="@dimen/margin_16"
+            android:layout_marginRight="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_24">
+
+            <EditText
+                android:id="@+id/et_username"
+                android:hint="@string/username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:maxLength="21"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/til_password"
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:layout_marginRight="@dimen/margin_16"
+                android:layout_marginLeft="@dimen/margin_16">
+
+                <EditText
+                    android:id="@+id/et_password"
+                    android:hint="@string/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:maxLength="21"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <CheckBox
+                android:id="@+id/cb_visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignBottom="@id/til_password"
+                android:layout_marginBottom="@dimen/margin_42"
+                android:layout_marginRight="@dimen/margin_20"
+                android:background="@drawable/icon_visible"
+                android:button="@null" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_register"
+            android:text="@string/register"
+            android:textSize="@dimen/size_txt_title_normal"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_16"
+            android:layout_marginLeft="@dimen/margin_20"
+            android:layout_marginRight="@dimen/margin_20"
+            android:background="@drawable/button_shape"
+            android:foreground="?attr/selectableItemBackground"/>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
