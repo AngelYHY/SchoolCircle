@@ -1,4 +1,4 @@
-package com.myschool.schoolcircle.main;
+package com.myschool.schoolcircle.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.myschool.schoolcircle.base.BaseActivity;
 import com.myschool.schoolcircle.lib.CircleImageView;
+import com.myschool.schoolcircle.main.R;
 import com.myschool.schoolcircle.ui.activity.mine.About;
 import com.myschool.schoolcircle.ui.activity.mine.MineActivity;
 import com.myschool.schoolcircle.ui.activity.mine.Notification;
@@ -46,9 +47,7 @@ import cn.jpush.im.android.api.event.MessageBaseEvent;
 import cn.jpush.im.android.api.model.Message;
 import cn.jpush.im.android.api.model.UserInfo;
 
-public class MainActivity extends BaseActivity implements
-        RadioGroup.OnCheckedChangeListener,
-        NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, NavigationView.OnNavigationItemSelectedListener {
 
     @Bind(R.id.layout_main)
     DrawerLayout layoutMain;
@@ -210,7 +209,7 @@ public class MainActivity extends BaseActivity implements
 
         switch (item.getItemId()) {
             case R.id.menu_toolbar_notifications:
-                intentToActivity(Notification.class);
+                readyGo(Notification.class);
                 break;
             default:
                 break;
@@ -237,12 +236,12 @@ public class MainActivity extends BaseActivity implements
 
             case R.id.menu_settings:
                 //设置
-                intentToActivity(Settings.class);
+                readyGo(Settings.class);
                 break;
 
             case R.id.menu_about:
                 //关于
-                intentToActivity(About.class);
+                readyGo(About.class);
                 break;
 
             case R.id.menu_exit:

@@ -1,6 +1,5 @@
 package com.myschool.schoolcircle.base;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -21,9 +20,6 @@ import com.rey.material.app.ThemeManager;
 
 import org.xutils.x;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.model.UserInfo;
@@ -41,7 +37,6 @@ public class AppApplication extends Application {
     private ApplicationComponent component;
     private Tb_user user;
     private UserInfo myInfo;
-    private List<Activity> activities;
     private SettingConfig settingConfig;
 
     @Override
@@ -54,7 +49,6 @@ public class AppApplication extends Application {
     }
 
     private void initOther() {
-        activities = new ArrayList<>();
         //设置极光推送时Debug输出的信息
         JPushInterface.setDebugMode(true);//项目完成时要删除！！！！
         //极光推送初始化
@@ -101,22 +95,12 @@ public class AppApplication extends Application {
         this.myInfo = myInfo;
     }
 
-    public List<Activity> getActivities() {
-        return activities;
-    }
-
     public SettingConfig getSettingConfig() {
         return settingConfig;
     }
 
     public void setSettingConfig(SettingConfig settingConfig) {
         this.settingConfig = settingConfig;
-    }
-
-    public void finish() {
-        for (Activity activity : activities) {
-            activity.finish();
-        }
     }
 
     @Override

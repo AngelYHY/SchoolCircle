@@ -28,7 +28,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class SearchSchool extends AppCompatActivity
+public class SearchSchoolActivity extends AppCompatActivity
         implements SearchView.OnQueryTextListener {
 
     @Bind(R.id.sv_school)
@@ -74,7 +74,7 @@ public class SearchSchool extends AppCompatActivity
         lvSchool.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent1 = new Intent(SearchSchool.this,RegisterActivity.class);
+                Intent intent1 = new Intent(SearchSchoolActivity.this,RegisterActivity.class);
                 intent1.putExtra("school",schools.get(i));
                 intent1.putExtra("phone",phone);
                 startActivity(intent1);

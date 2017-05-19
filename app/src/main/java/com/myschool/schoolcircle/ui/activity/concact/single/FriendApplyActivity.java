@@ -265,7 +265,7 @@ public class FriendApplyActivity extends BaseActivity
                 finish();
                 break;
             case R.id.menu_add:
-                intentToActivity(AddFriendsActivity.class);
+                readyGo(AddFriendsActivity.class);
                 break;
             default:
                 break;

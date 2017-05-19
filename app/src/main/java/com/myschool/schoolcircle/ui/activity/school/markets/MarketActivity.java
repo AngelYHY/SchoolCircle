@@ -153,7 +153,7 @@ public class MarketActivity extends BaseActivity implements SwipeRefreshLayout.O
             case R.id.menu_my_market:
                 //进入我的商品
                 //ToastUtil.showToast(this,"我的商品",Toast.LENGTH_SHORT);
-                intentToActivity(MyCommodityActivity.class);
+                readyGo(MyCommodityActivity.class);
                 break;
 
             case R.id.menu_market_list:

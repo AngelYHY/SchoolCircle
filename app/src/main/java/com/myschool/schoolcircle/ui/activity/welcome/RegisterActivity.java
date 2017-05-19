@@ -24,7 +24,7 @@ import com.google.gson.Gson;
 import com.myschool.schoolcircle.base.BaseActivity;
 import com.myschool.schoolcircle.entity.Tb_school;
 import com.myschool.schoolcircle.entity.Tb_user;
-import com.myschool.schoolcircle.main.MainActivity;
+import com.myschool.schoolcircle.ui.activity.MainActivity;
 import com.myschool.schoolcircle.main.R;
 import com.myschool.schoolcircle.utils.HandlerKey;
 
@@ -78,10 +78,7 @@ public class RegisterActivity extends BaseActivity {
                 case HandlerKey.J_LOGIN_SUCCESS:
                     //极光登录成功，进入主界面
                     dialog.cancel();
-                    intentToActivity(MainActivity.class);
-//                    intentToActivity(SearchSchool.class);
-                    application.finish();
-                    finish();
+                    readyGoThenKill(MainActivity.class);
                     break;
                 case HandlerKey.J_LOGIN_FAIL:
                     //极光登录失败

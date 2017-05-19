@@ -7,6 +7,6 @@ package com.myschool.schoolcircle.presenter;
  * github：
  */
 
-public interface IWelcome {
-    void response();
+public interface WelcomePresenter {
+    void login(String name, String psw);
 }

@@ -1,5 +1,7 @@
 package com.myschool.schoolcircle.view;
 
+import com.myschool.schoolcircle.entity.Tb_user;
+
 import free.free.base.IView;
 
 /**
@@ -10,5 +12,6 @@ import free.free.base.IView;
  */
 
 public interface WelcomeView extends IView {
-    void doLogin(String name, String psw);
+    void response(boolean success, Tb_user user);
+
 }

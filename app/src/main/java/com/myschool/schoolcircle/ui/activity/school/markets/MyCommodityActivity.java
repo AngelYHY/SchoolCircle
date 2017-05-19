@@ -81,19 +81,19 @@ public class MyCommodityActivity extends BaseActivity {
             case R.id.rl_order:
                 //点击进入我的订单
                 //ToastUtil.showToast(this, "我的订单", Toast.LENGTH_SHORT);
-                intentToActivity(MyOrderActivity.class);
+                readyGo(MyOrderActivity.class);
                 break;
 
             case R.id.rl_putaway:
                 //点击进入我的上架
                 //ToastUtil.showToast(this, "我的上架", Toast.LENGTH_SHORT);
-                intentToActivity(MyPutawayActivity.class);
+                readyGo(MyPutawayActivity.class);
                 break;
 
             case R.id.rl_inform:
                 //点击进入下单通知
                 //ToastUtil.showToast(this, "下单通知", Toast.LENGTH_SHORT);
-                intentToActivity(MyInformActivity.class);
+                readyGo(MyInformActivity.class);
                 break;
         }
     }

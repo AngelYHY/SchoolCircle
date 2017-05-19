@@ -1,6 +1,5 @@
 package com.myschool.schoolcircle.base;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -50,7 +49,6 @@ public abstract class BaseActivity extends BaseAppCompatActivity implements IVie
     public int page = 1;
     protected static final int PAGE_SIZE = 3;
 
-    protected String tag;
     protected static AppApplication application;
     protected final String URL = Config.URL;
 
@@ -63,19 +61,6 @@ public abstract class BaseActivity extends BaseAppCompatActivity implements IVie
                         .observeOn(AndroidSchedulers.mainThread());
             }
         };
-
-    }
-
-    @Override
-    public void setContentView(int layoutResID) {
-        super.setContentView(layoutResID);
-//        mToolbar = ButterKnife.findById(this, R.id.common_toolbar);
-//        if (null != mToolbar) {
-//            mToolbar.setTitle("");
-//            setSupportActionBar(mToolbar);
-//            getSupportActionBar().setHomeButtonEnabled(true);
-//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        }
     }
 
     @Override
@@ -89,14 +74,7 @@ public abstract class BaseActivity extends BaseAppCompatActivity implements IVie
 
 
     private void init() {
-        tag = getClass().getSimpleName();
-
         application = (AppApplication) getApplication();
-    }
-
-    protected void intentToActivity(Class<? extends Activity> targetActivity) {
-        Intent intent = new Intent(this, targetActivity);
-        startActivity(intent);
     }
 
     //登录状态改变监听
@@ -175,18 +153,15 @@ public abstract class BaseActivity extends BaseAppCompatActivity implements IVie
     }
 
     protected void showSnackBarLong(View view, CharSequence text) {
-//        Snackbar.make(view, text, Snackbar.LENGTH_LONG).setAction(R.string.get_it, this).show();
         Snackbar.make(view, text, Snackbar.LENGTH_LONG).setAction("知道了", this).show();
     }
 
     protected void showSnackBarShort(View view, int resId) {
-//        Snackbar.make(view, resId, Snackbar.LENGTH_SHORT).setAction(R.string.get_it, this).show();
-        Snackbar.make(view, resId, Snackbar.LENGTH_LONG).setAction("知道了", this).show();
+        Snackbar.make(view, resId, Snackbar.LENGTH_SHORT).setAction("知道了", this).show();
     }
 
     protected void showSnackBarShort(View view, CharSequence text) {
-        Snackbar.make(view, text, Snackbar.LENGTH_LONG).setAction("知道了", this).show();
-//        Snackbar.make(view, text, Snackbar.LENGTH_SHORT).setAction(R.string.get_it, this).show();
+        Snackbar.make(view, text, Snackbar.LENGTH_SHORT).setAction("知道了", this).show();
     }
 
     //强制显示软键盘

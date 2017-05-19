@@ -19,7 +19,6 @@ import butterknife.OnClick;
 
 public class About extends AppCompatActivity {
 
-
     @Bind(R.id.tb_dynamic_detail)
     Toolbar tbDynamicDetail;
     @Bind(R.id.LOGO)

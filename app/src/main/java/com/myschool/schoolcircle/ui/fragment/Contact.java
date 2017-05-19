@@ -38,8 +38,7 @@ import butterknife.ButterKnife;
 /**
  * Created by Mr.R on 2016/7/12.
  */
-public class Contact extends BaseFragment implements
-        SwipeRefreshLayout.OnRefreshListener {
+public class Contact extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.lv_contact)
     ListView lvContact;

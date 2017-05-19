@@ -115,7 +115,7 @@ public class MyPutawayActivity extends BaseActivity {
             case R.id.menu_myputaway_publish:
                 //发布商品
                 //ToastUtil.showToast(this, "发布商品", Toast.LENGTH_SHORT);
-                intentToActivity(PutAwayCommodityActivity.class);
+                readyGo(PutAwayCommodityActivity.class);
                 break;
 
             default:

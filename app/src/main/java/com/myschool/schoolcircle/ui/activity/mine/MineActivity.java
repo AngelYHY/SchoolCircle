@@ -35,7 +35,7 @@ import com.myschool.schoolcircle.adapter.ViewHolder;
 import com.myschool.schoolcircle.base.BaseActivity;
 import com.myschool.schoolcircle.entity.Tb_user;
 import com.myschool.schoolcircle.lib.CircleImageView;
-import com.myschool.schoolcircle.main.MainActivity;
+import com.myschool.schoolcircle.ui.activity.MainActivity;
 import com.myschool.schoolcircle.main.R;
 import com.myschool.schoolcircle.ui.activity.concact.single.SingleChat;
 import com.myschool.schoolcircle.utils.HandlerKey;

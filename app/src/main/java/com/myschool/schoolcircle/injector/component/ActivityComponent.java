@@ -6,6 +6,7 @@ import android.content.Context;
 import com.myschool.schoolcircle.injector.ContextLife;
 import com.myschool.schoolcircle.injector.PerActivity;
 import com.myschool.schoolcircle.injector.module.ActivityModule;
+import com.myschool.schoolcircle.ui.activity.welcome.WelcomeActivity;
 
 import dagger.Component;
 
@@ -23,5 +24,7 @@ public interface ActivityComponent {
     Context getApplicationContext();
 
     Activity getActivity();
+
+    void inject(WelcomeActivity activity);
 
 }

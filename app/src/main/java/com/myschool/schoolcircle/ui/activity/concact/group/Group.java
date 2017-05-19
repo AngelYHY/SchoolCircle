@@ -1,7 +1,6 @@
 package com.myschool.schoolcircle.ui.activity.concact.group;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -32,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import cn.jpush.im.android.api.event.LoginStateChangeEvent;
 
 public class Group extends BaseActivity
@@ -194,13 +192,13 @@ public class Group extends BaseActivity
                 finish();
                 break;
             case R.id.menu_join_group:
-                intentToActivity(SearchGroup.class);
+                readyGo(SearchGroup.class);
                 break;
             case R.id.menu_create_group:
                 showAlertDialog();
                 break;
             case R.id.menu_group_apply:
-                intentToActivity(GroupApply.class);
+                readyGo(GroupApply.class);
                 break;
             default:
                 break;

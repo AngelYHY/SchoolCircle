@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.myschool.schoolcircle.adapter.MessageAdapter;
 import com.myschool.schoolcircle.base.BaseFragment;
-import com.myschool.schoolcircle.main.MainActivity;
+import com.myschool.schoolcircle.ui.activity.MainActivity;
 import com.myschool.schoolcircle.main.R;
 import com.myschool.schoolcircle.ui.activity.concact.group.GroupChat;
 import com.myschool.schoolcircle.ui.activity.concact.group.TempGroupChat;

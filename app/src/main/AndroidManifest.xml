@@ -170,7 +170,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.myschool.schoolcircle.ui.activity.MainActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden"/>
         <activity
@@ -244,7 +244,7 @@
         <activity
             android:name="com.myschool.schoolcircle.ui.activity.concact.group.TempGroupChat"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name="com.myschool.schoolcircle.ui.activity.welcome.SearchSchool" />
+        <activity android:name="com.myschool.schoolcircle.ui.activity.welcome.SearchSchoolActivity" />
         <activity android:name="com.myschool.schoolcircle.ui.activity.mine.Notification" />
         <activity android:name="com.myschool.schoolcircle.ui.activity.mine.Settings" />
         <activity android:name="com.myschool.schoolcircle.ui.activity.school.dynamic.AboutMeActivity" />

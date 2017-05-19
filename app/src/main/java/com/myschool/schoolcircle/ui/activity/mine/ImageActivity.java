@@ -1,5 +1,6 @@
 package com.myschool.schoolcircle.ui.activity.mine;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
@@ -8,6 +9,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,8 +38,10 @@ import java.util.Set;
 
 import butterknife.Bind;
 import cn.jpush.im.android.api.event.LoginStateChangeEvent;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
-public class ImageActivity extends BaseActivity {
+public class ImageActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks{
 
     @Bind(R.id.gv_image_main)
     GridView gvImageMain;
@@ -58,6 +62,7 @@ public class ImageActivity extends BaseActivity {
     private File mCurrentDir;
     private int mMaxCount;
     private static final int DATA_LOADED = 0x110;
+    private static final int REQUEST_CODE_CREATE_DIR = 1;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -166,80 +171,90 @@ public class ImageActivity extends BaseActivity {
     /**
      * 利用ContentProvider扫描手机中的图片
      */
+    @AfterPermissionGranted(REQUEST_CODE_CREATE_DIR)
     private void initData() {
-        //判断存储卡是否可用
-        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            Toast.makeText(this, "当前存储卡不可用", Toast.LENGTH_LONG).show();
-            return;
+
+        String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (EasyPermissions.hasPermissions(this, perms)) {
+
+            //判断存储卡是否可用
+            if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                Toast.makeText(this, "当前存储卡不可用", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            //开启子线程加载图片资源
+            new Thread() {
+                @Override
+                public void run() {
+                    Uri mImageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                    ContentResolver cr = ImageActivity.this.getContentResolver();
+
+                    Cursor cursor = cr.query(mImageUri, null,
+                            MediaStore.Images.Media.MIME_TYPE + "= ? or " +
+                                    MediaStore.Images.Media.MIME_TYPE + "=?",
+                            new String[]{"image/jpeg", "image/png"},
+                            MediaStore.Images.Media.DATE_MODIFIED);
+
+                    Set<String> mDirPaths = new HashSet<String>();
+                    //遍历获取每一张图片的路径
+                    while (cursor.moveToNext()) {
+                        String path = cursor.getString(cursor
+                                .getColumnIndex(MediaStore.Images.Media.DATA));
+                        File parentFile = new File(path).getParentFile();
+                        if (parentFile == null) {
+                            continue;
+                        }
+                        String dirPath = parentFile.getAbsolutePath();
+                        FolderBean folderBean = null;
+
+                        if (mDirPaths.contains(dirPath)) {
+                            continue;
+                        } else {
+                            mDirPaths.add(dirPath);
+                            //构造图片所在的文件夹
+                            folderBean = new FolderBean();
+                            folderBean.setFolderDir(dirPath);
+                            folderBean.setFirstImagePath(path);
+                        }
+
+                        if (parentFile.list() == null) {
+                            continue;
+                        }
+
+                        int imageCount = parentFile.list(new FilenameFilter() {
+                            @Override
+                            public boolean accept(File file, String fileName) {
+                                if (fileName.endsWith(".jpg")
+                                        || fileName.endsWith(".jpeg")
+                                        || fileName.endsWith(".png")) {
+
+                                    return true;
+                                }
+                                return false;
+                            }
+                        }).length;
+
+                        folderBean.setCount(imageCount);
+                        //将构造好的文件夹放入文件夹的集合中，用于popupWindow文件夹的显示
+                        mFolders.add(folderBean);
+
+                        //底部显示的文件夹的名称，图片数量
+                        if (imageCount > mMaxCount) {
+                            mMaxCount = imageCount;
+                            mCurrentDir = parentFile;
+                        }
+                    }
+                    cursor.close();
+                    //通知Handler扫描图片完成
+                    mHandler.sendEmptyMessage(DATA_LOADED);
+                }
+            }.start();
+
+        } else {
+            EasyPermissions.requestPermissions(this, "下载PDF需要创建目录来存放文件", REQUEST_CODE_CREATE_DIR, perms);
         }
 
-        //开启子线程加载图片资源
-        new Thread() {
-            @Override
-            public void run() {
-                Uri mImageUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                ContentResolver cr = ImageActivity.this.getContentResolver();
-
-                Cursor cursor = cr.query(mImageUri, null,
-                        MediaStore.Images.Media.MIME_TYPE + "= ? or " +
-                                MediaStore.Images.Media.MIME_TYPE + "=?",
-                        new String[]{"image/jpeg", "image/png"},
-                        MediaStore.Images.Media.DATE_MODIFIED);
-
-                Set<String> mDirPaths = new HashSet<String>();
-                //遍历获取每一张图片的路径
-                while (cursor.moveToNext()) {
-                    String path = cursor.getString(cursor
-                            .getColumnIndex(MediaStore.Images.Media.DATA));
-                    File parentFile = new File(path).getParentFile();
-                    if (parentFile == null) {
-                        continue;
-                    }
-                    String dirPath = parentFile.getAbsolutePath();
-                    FolderBean folderBean = null;
-
-                    if (mDirPaths.contains(dirPath)) {
-                        continue;
-                    } else {
-                        mDirPaths.add(dirPath);
-                        //构造图片所在的文件夹
-                        folderBean = new FolderBean();
-                        folderBean.setFolderDir(dirPath);
-                        folderBean.setFirstImagePath(path);
-                    }
-
-                    if (parentFile.list() == null) {
-                        continue;
-                    }
-
-                    int imageCount = parentFile.list(new FilenameFilter() {
-                        @Override
-                        public boolean accept(File file, String fileName) {
-                            if (fileName.endsWith(".jpg")
-                                    || fileName.endsWith(".jpeg")
-                                    || fileName.endsWith(".png")) {
-
-                                return true;
-                            }
-                            return false;
-                        }
-                    }).length;
-
-                    folderBean.setCount(imageCount);
-                    //将构造好的文件夹放入文件夹的集合中，用于popupWindow文件夹的显示
-                    mFolders.add(folderBean);
-
-                    //底部显示的文件夹的名称，图片数量
-                    if (imageCount > mMaxCount) {
-                        mMaxCount = imageCount;
-                        mCurrentDir = parentFile;
-                    }
-                }
-                cursor.close();
-                //通知Handler扫描图片完成
-                mHandler.sendEmptyMessage(DATA_LOADED);
-            }
-        }.start();
     }
 
     //初始化监听事件
@@ -279,5 +294,24 @@ public class ImageActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        if (requestCode == REQUEST_CODE_CREATE_DIR) {
+            Toast.makeText(mContext, "您拒绝了创建目录存放文件的权限,无法打开PDF", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
 
 }

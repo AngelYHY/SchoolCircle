@@ -44,7 +44,8 @@ public class ApplicationModule {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         httpClientBuilder.connectTimeout(2, TimeUnit.SECONDS);
 
-        String baseUrl = "http://localhost:8080/SchoolCircleServlet/";
+//        String baseUrl = "http://192.168.1.104:8080/SchoolCircleServlet/";
+        String baseUrl = "http://192.168.1.108:8080/SchoolCircleServlet/";
         Retrofit retrofit = new Retrofit.Builder()
                 .client(httpClientBuilder.build())
                 .baseUrl(baseUrl)

@@ -34,7 +34,7 @@ import com.myschool.schoolcircle.adapter.DynamicRecyclerAdapter;
 import com.myschool.schoolcircle.base.BaseFragment;
 import com.myschool.schoolcircle.config.Config;
 import com.myschool.schoolcircle.entity.Tb_dynamic;
-import com.myschool.schoolcircle.main.MainActivity;
+import com.myschool.schoolcircle.ui.activity.MainActivity;
 import com.myschool.schoolcircle.main.R;
 import com.myschool.schoolcircle.ui.activity.school.activitys.DetailsItemActivity;
 import com.myschool.schoolcircle.ui.activity.school.dynamic.SendDynamic;

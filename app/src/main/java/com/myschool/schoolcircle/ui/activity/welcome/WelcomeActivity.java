@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.design.widget.TextInputLayout;
@@ -33,20 +32,28 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.myschool.schoolcircle.base.BaseActivity;
-import com.myschool.schoolcircle.main.MainActivity;
+import com.myschool.schoolcircle.entity.Tb_user;
 import com.myschool.schoolcircle.main.R;
 import com.myschool.schoolcircle.presenter.impl.WelcomePresent;
+import com.myschool.schoolcircle.ui.activity.MainActivity;
 import com.myschool.schoolcircle.utils.HandlerKey;
 import com.myschool.schoolcircle.utils.ProgressDialogUtil;
+import com.myschool.schoolcircle.utils.ToastUtil;
+import com.myschool.schoolcircle.view.WelcomeView;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.Set;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.api.TagAliasCallback;
@@ -55,10 +62,10 @@ import cn.jpush.im.android.api.event.LoginStateChangeEvent;
 import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
 
-public class WelcomeActivity extends BaseActivity {
+public class WelcomeActivity extends BaseActivity implements WelcomeView {
 
     @Inject
-    WelcomePresent mPresent;
+    WelcomePresent mPresenter;
 
     @Bind(R.id.iv_logo)
     ImageView ivLogo;
@@ -119,9 +126,7 @@ public class WelcomeActivity extends BaseActivity {
                     break;
                 case HandlerKey.LOGIN_SUCCESS:
                     mProgressDialog.cancel();
-                    intentToActivity(MainActivity.class);
-//                    handler.sendEmptyMessage(0);
-                    finish();
+                    readyGoThenKill(MainActivity.class);
                     break;
                 case HandlerKey.LOGIN_FAIL:
                     mProgressDialog.cancel();
@@ -143,7 +148,14 @@ public class WelcomeActivity extends BaseActivity {
         }
     };
 
-//    @Override
+    @Override
+    protected void initInjector() {
+        super.initInjector();
+        mActivityComponent.inject(this);
+        mIPresenter = mPresenter;
+    }
+
+    //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
 //
@@ -187,6 +199,7 @@ public class WelcomeActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        mPresenter.attachView(this);
         doStart();
     }
 
@@ -199,14 +212,14 @@ public class WelcomeActivity extends BaseActivity {
     private void doStart() {
         Intent intent = getIntent();
         String type = intent.getStringExtra("type");
-        handler.sendEmptyMessage(1);
+//        handler.sendEmptyMessage(1);
         init();
         preference = getSharedPreferences("autoLogin", MODE_PRIVATE);
         String username = preference.getString("username", "");
         String password = preference.getString("password", "");
 
         //取消自动登录
-        handler.sendEmptyMessageDelayed(2, 3500);
+//        handler.sendEmptyMessageDelayed(2, 3500);
         //自动登录
 //        if (type == null) {
 //            if (username.isEmpty()) {
@@ -221,6 +234,16 @@ public class WelcomeActivity extends BaseActivity {
 //        } else {
 //            handler.sendEmptyMessageDelayed(2,300);
 //        }
+
+        //自动登录
+        if (type == null) {
+            if (prove(username, password)) {
+                login(username, password);
+                return;
+            }
+        }
+        handler.sendEmptyMessage(1);
+        handler.sendEmptyMessageDelayed(2, 2000);
     }
 
     //初始化
@@ -304,7 +327,7 @@ public class WelcomeActivity extends BaseActivity {
                 break;
             case R.id.btn_register:
                 //注册
-                intentToActivity(SMSCodeActivity.class);
+                readyGo(SMSCodeActivity.class);
 //                Intent intent = new Intent(this, RegisterActivity.class);
 //                intent.putExtra("phone", "15359600016");
 //                application.getActivities().add(this);
@@ -312,7 +335,7 @@ public class WelcomeActivity extends BaseActivity {
                 break;
             case R.id.btn_forget_password:
                 //忘记密码
-                intentToActivity(ResetPasswordActivity.class);
+                readyGo(ResetPasswordActivity.class);
                 break;
             default:
                 break;
@@ -427,7 +450,8 @@ public class WelcomeActivity extends BaseActivity {
     //登录
     private void login(final String username, final String password) {
         //从服务器获取个人信息
-        getMyUserInfo(username, password);
+//        getMyUserInfo(username, password);
+        mPresenter.login(username, password);
     }
 
     //登录极光服务器
@@ -469,43 +493,43 @@ public class WelcomeActivity extends BaseActivity {
 
     //从自己的服务器获取我的个人信息
     private void getMyUserInfo(final String username, String password) {
-//        RequestParams params = new RequestParams(URL + "Login");
-//        params.setConnectTimeout(8000);
-//
-//        params.addBodyParameter("username", username);
-//        params.addBodyParameter("password", password);
-//
-//        x.http().post(params, new Callback.CommonCallback<String>() {
-//            @Override
-//            public void onSuccess(String result) {
-//                if (!"fail".equals(result)) {
-//                    Gson gson = new Gson();
-//                    Tb_user user = gson.fromJson(result, Tb_user.class);
-//                    application.setUser(user);
-//                    JLogin(user.getUsername(),user.getPassword());
-////                    handler.sendEmptyMessage(HandlerKey.LOGIN_SUCCESS);
-//                } else {
-//                    mProgressDialog.cancel();
-//                    showSnackBarLong(rlWelcome,"用户名或密码错误");
-//                }
-//            }
-//
-//            @Override
-//            public void onError(Throwable ex, boolean isOnCallback) {
-//                ToastUtil.showToast(Welcome.this, "服务器连接失败，请检查网络", Toast.LENGTH_LONG);
-//                mProgressDialog.cancel();
-//            }
-//
-//            @Override
-//            public void onCancelled(CancelledException cex) {
-//
-//            }
-//
-//            @Override
-//            public void onFinished() {
-//
-//            }
-//        });
+        RequestParams params = new RequestParams(URL + "Login");
+        params.setConnectTimeout(8000);
+
+        params.addBodyParameter("username", username);
+        params.addBodyParameter("password", password);
+
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                if (!"fail".equals(result)) {
+                    Gson gson = new Gson();
+                    Tb_user user = gson.fromJson(result, Tb_user.class);
+                    application.setUser(user);
+                    JLogin(user.getUsername(), user.getPassword());
+//                    handler.sendEmptyMessage(HandlerKey.LOGIN_SUCCESS);
+                } else {
+                    mProgressDialog.cancel();
+                    showSnackBarLong(rlWelcome, "用户名或密码错误");
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                ToastUtil.showToast(WelcomeActivity.this, "服务器连接失败，请检查网络", Toast.LENGTH_LONG);
+                mProgressDialog.cancel();
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 
     //呼吸动画
@@ -555,7 +579,9 @@ public class WelcomeActivity extends BaseActivity {
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
 
                 int curValue = (int) valueAnimator.getAnimatedValue();
-                ivLogo.setY(curValue);
+                if (ivLogo != null) {
+                    ivLogo.setY(curValue);
+                }
 
             }
         });
@@ -575,7 +601,9 @@ public class WelcomeActivity extends BaseActivity {
             public void onAnimationUpdate(ValueAnimator valueAnimator) {
 
                 int curValue = (int) valueAnimator.getAnimatedValue();
-                ivLogo.setX(curValue);
+                if (ivLogo != null) {
+                    ivLogo.setX(curValue);
+                }
 
             }
         });
@@ -661,22 +689,22 @@ public class WelcomeActivity extends BaseActivity {
                         root.getWindowVisibleDisplayFrame(rect);
                         //获取root在窗体的不可视区域高度(被其他View遮挡的区域高度)
                         int rootInvisibleHeight = root.getRootView().getHeight() - rect.bottom;
-                        int srollHeight = 0;
+                        int scrollHeight = 0;
                         //若不可视区域高度大于100，则键盘显示
                         if (rootInvisibleHeight > 100) {
                             int[] location = new int[2];
                             //获取scrollToView在窗体的坐标
                             scrollToView.getLocationInWindow(location);
                             //计算root滚动高度，使scrollToView在可见区域
-                            srollHeight = (location[1] + scrollToView.getHeight()) - rect.bottom;
+                            scrollHeight = (location[1] + scrollToView.getHeight()) - rect.bottom;
                             root.animate()
-                                    .translationY(-srollHeight - 10)
+                                    .translationY(-scrollHeight - 10)
                                     .setInterpolator(new DecelerateInterpolator())
                                     .start();
                         } else {
                             //键盘隐藏
                             root.animate()
-                                    .translationY(srollHeight)
+                                    .translationY(scrollHeight)
                                     .setInterpolator(new DecelerateInterpolator())
                                     .start();
                         }
@@ -694,5 +722,16 @@ public class WelcomeActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         JPushInterface.onResume(this);
+    }
+
+    @Override
+    public void response(boolean success, Tb_user user) {
+        if (success) {
+            application.setUser(user);
+            JLogin(user.getUsername(), user.getPassword());
+        } else {
+            mProgressDialog.cancel();
+            showSnackBarLong(rlWelcome, "用户名或密码错误");
+        }
     }
 }

@@ -5,7 +5,7 @@ package com.myschool.schoolcircle.config;
  */
 public class Config {
     //班级
-    public final static String URL = "http://192.168.1.104:8080/SchoolCircleServlet/";
+    public final static String URL = "http://192.168.1.108:8080/SchoolCircleServlet/";
     //阿里云
 //    public final static String URL = "http://101.201.233.128:8080/SchoolCircleServlet/";
     //宿舍
