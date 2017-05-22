@@ -28,6 +28,9 @@ import cn.smssdk.SMSSDK;
 
 import static com.mob.tools.utils.R.getStringRes;
 
+/**
+ * 手机号验证
+ */
 public class SMSCodeActivity extends BaseActivity
         implements View.OnClickListener {
 
@@ -241,7 +244,6 @@ public class SMSCodeActivity extends BaseActivity
             }
         }
 
-        ;
     };
 
     Handler handler = new Handler() {
@@ -257,11 +259,11 @@ public class SMSCodeActivity extends BaseActivity
                 if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {//提交验证码成功,验证通过
 
                     //打开注册页面
-                    Intent intent = new Intent(SMSCodeActivity.this,RegisterActivity.class);
-                    intent.putExtra("phone",iPhone);
+                    Intent intent = new Intent(SMSCodeActivity.this, RegisterActivity.class);
+                    intent.putExtra("phone", iPhone);
                     startActivity(intent);
                     finish();
-                    handlerText.sendEmptyMessage(2);
+//                    handlerText.sendEmptyMessage(2);
 
                 } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {//服务器验证码发送成功
 //                    reminderText();

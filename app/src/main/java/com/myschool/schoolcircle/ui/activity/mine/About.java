@@ -16,7 +16,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-
+/**
+ * App 介绍
+ */
 public class About extends AppCompatActivity {
 
     @Bind(R.id.tb_dynamic_detail)

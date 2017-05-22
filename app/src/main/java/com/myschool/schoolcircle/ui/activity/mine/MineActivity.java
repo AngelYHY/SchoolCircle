@@ -29,18 +29,20 @@ import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.myschool.schoolcircle.adapter.CommonAdapter;
 import com.myschool.schoolcircle.adapter.ViewHolder;
 import com.myschool.schoolcircle.base.BaseActivity;
 import com.myschool.schoolcircle.entity.Tb_user;
 import com.myschool.schoolcircle.lib.CircleImageView;
-import com.myschool.schoolcircle.ui.activity.MainActivity;
 import com.myschool.schoolcircle.main.R;
+import com.myschool.schoolcircle.presenter.impl.MinePresenterImpl;
+import com.myschool.schoolcircle.ui.activity.MainActivity;
 import com.myschool.schoolcircle.ui.activity.concact.single.SingleChat;
 import com.myschool.schoolcircle.utils.HandlerKey;
 import com.myschool.schoolcircle.utils.ProgressDialogUtil;
 import com.myschool.schoolcircle.utils.QiniuCloudUtil;
+import com.myschool.schoolcircle.view.MineView;
+import com.orhanobut.logger.Logger;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -52,6 +54,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback;
@@ -60,8 +64,13 @@ import cn.jpush.im.android.api.event.LoginStateChangeEvent;
 import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
 
-public class MineActivity extends BaseActivity
-        implements View.OnClickListener{
+/**
+ * 个人信息  名片
+ */
+public class MineActivity extends BaseActivity implements View.OnClickListener, MineView {
+
+    @Inject
+    MinePresenterImpl mPresenter;
 
     @Bind(R.id.tb_mine)
     Toolbar tbMine;
@@ -97,12 +106,34 @@ public class MineActivity extends BaseActivity
     LinearLayout llSignature;
 
     private UserInfo mUserInfo;
-    private Tb_user mUser;
     private ProgressDialog mProgressDialog;
     private String type;
-    private ItemAdapter mAdapter;
 
-    private class ItemAdapter extends CommonAdapter<String>{
+    @Override
+    public void response(boolean success, Tb_user user) {
+        if (success) {
+            tvStartSchoolYear.setText(user.getStartSchoolYear());
+        } else {
+            showMsg("信息获取异常");
+        }
+    }
+
+    @Override
+    public void updateResponse(boolean success, String target, String update) {
+        if (success) {
+            if (target.equals("start_School_Year")) {
+                tvStartSchoolYear.setText(update);
+                mHandler.sendEmptyMessage(HandlerKey.UPDATE_SUCCESS);
+            } else {
+                mHandler.sendEmptyMessage(HandlerKey.UPDATE_SUCCESS);
+            }
+        } else {
+            Logger.e("更新失败");
+            mHandler.sendEmptyMessage(HandlerKey.UPDATE_FAIL);
+        }
+    }
+
+    private class ItemAdapter extends CommonAdapter<String> {
 
         public ItemAdapter(Context context, List<String> data, int layoutId) {
             super(context, data, layoutId);
@@ -110,7 +141,7 @@ public class MineActivity extends BaseActivity
 
         @Override
         public void convert(ViewHolder holder, String s) {
-            holder.setText(R.id.tv_text,s);
+            holder.setText(R.id.tv_text, s);
         }
     }
 
@@ -127,15 +158,15 @@ public class MineActivity extends BaseActivity
                 case HandlerKey.UPDATE_SUCCESS:
                     updateInformation();
                     mProgressDialog.cancel();
-                    showSnackBarLong(clMine,"更新信息成功");
+                    showSnackBarLong(clMine, "更新信息成功");
                     break;
                 case HandlerKey.UPDATE_FAIL:
                     mProgressDialog.cancel();
-                    showSnackBarLong(clMine,"更新信息失败");
+                    showSnackBarLong(clMine, "更新信息失败");
                     break;
                 case HandlerKey.UPLOAD_SUCCESS:
                     String url = (String) msg.obj;
-                    postNewInfo2Server(url,"user_head");
+                    postNewInfo2Server(url, "user_head");
                     break;
                 case HandlerKey.UPLOAD_FAIL:
 
@@ -156,6 +187,13 @@ public class MineActivity extends BaseActivity
 //        init();
 //    }
 
+
+    @Override
+    protected void initInjector() {
+        super.initInjector();
+        mActivityComponent.inject(this);
+        mIPresenter = mPresenter;
+    }
 
     @Override
     public void setContentView(int layoutResID) {
@@ -191,11 +229,13 @@ public class MineActivity extends BaseActivity
 
     //初始化数据
     protected void initView() {
+        mPresenter.attachView(this);
         setSupportActionBar(tbMine);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("名片");
 
-        mProgressDialog = ProgressDialogUtil.getProgressDialog(this,"更新中...");
+        mProgressDialog = ProgressDialogUtil.getProgressDialog(this, "更新中...");
+
         initUserInfo();
         getUserInfo();
     }
@@ -236,7 +276,7 @@ public class MineActivity extends BaseActivity
                     //发消息
                     Intent intent = new Intent(MineActivity.this, SingleChat.class);
                     intent.putExtra("targetUsername", type);
-                    intent.putExtra("nickName",nickName);
+                    intent.putExtra("nickName", nickName);
                     startActivity(intent);
                 }
             });
@@ -250,8 +290,7 @@ public class MineActivity extends BaseActivity
             public void gotResult(int i, String s, Bitmap bitmap) {
                 if (i == 0) {
                     civUserHead.setImageBitmap(bitmap);
-                    if (mUserInfo.getUserName()
-                            .equals(application.getMyInfo().getUserName())){
+                    if (mUserInfo.getUserName().equals(application.getMyInfo().getUserName())) {
                         MainActivity.ivHeadView.setImageBitmap(bitmap);
                     }
                 }
@@ -285,7 +324,7 @@ public class MineActivity extends BaseActivity
         if (mUserInfo.getBirthday() > 28800000) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(mUserInfo.getBirthday());
-            Log.i("MineActivity", "refreshInformation: MineActivity"+mUserInfo.getBirthday());
+            Log.i("MineActivity", "refreshInformation: MineActivity" + mUserInfo.getBirthday());
             String time = new SimpleDateFormat("yyyy年MM月dd日").format(calendar.getTime());
             tvBirthday.setText(time);
         } else {
@@ -304,12 +343,12 @@ public class MineActivity extends BaseActivity
         switch (view.getId()) {
             case R.id.civ_user_head:
                 //设置头像
-                Intent intent = new Intent(this,ImageActivity.class);
-                startActivityForResult(intent,1);
+                Intent intent = new Intent(this, ImageActivity.class);
+                startActivityForResult(intent, 1);
                 break;
             case R.id.rl_real_name:
                 //设置昵称
-                showEditDialog("设置昵称","请输入新昵称");
+                showEditDialog("设置昵称", "请输入新昵称");
                 break;
             case R.id.rl_gender:
                 //设置性别
@@ -321,7 +360,7 @@ public class MineActivity extends BaseActivity
                 break;
             case R.id.rl_school_name:
                 //设置学校名称
-                showEditDialog("设置学校","请输入学校名称");
+                showEditDialog("设置学校", "请输入学校名称");
                 break;
             case R.id.rl_start_school_year:
                 //设置入学年份
@@ -329,7 +368,7 @@ public class MineActivity extends BaseActivity
                 break;
             case R.id.ll_signature:
                 //设置个性签名
-                showEditDialog("个性签名","书写你的风格");
+                showEditDialog("个性签名", "书写你的风格");
                 break;
         }
     }
@@ -337,7 +376,7 @@ public class MineActivity extends BaseActivity
     //显示设置文字对话框
     private void showEditDialog(final String title, String hint) {
         final View dialogView = LayoutInflater.from(this)
-                .inflate(R.layout.dialog_layout_edit,null);
+                .inflate(R.layout.dialog_layout_edit, null);
 
         TextView tvTitle = (TextView) dialogView.findViewById(R.id.tv_title);
         final EditText editText = (EditText) dialogView.findViewById(R.id.et_edit);
@@ -371,7 +410,7 @@ public class MineActivity extends BaseActivity
     //显示单选对话框
     private void showRadioDialog(String title) {
         final View dialogView = LayoutInflater.from(this)
-                .inflate(R.layout.dialog_layout_select,null);
+                .inflate(R.layout.dialog_layout_select, null);
 
         TextView tvTitle = (TextView) dialogView.findViewById(R.id.tv_title);
         final RadioButton rbMale = (RadioButton) dialogView.findViewById(R.id.rb_male);
@@ -427,13 +466,13 @@ public class MineActivity extends BaseActivity
         Calendar calendar = Calendar.getInstance();
         final List<String> years = new ArrayList<>();
         for (int i = 2010; i < 2017; i++) {
-            years.add(i+"");
+            years.add(i + "");
         }
-        mAdapter = new ItemAdapter(this,years,R.layout.item_text);
+        ItemAdapter adapter = new ItemAdapter(this, years, R.layout.item_text);
         TextView tvTitle = (TextView) dialogView.findViewById(R.id.tv_title);
         tvTitle.setText(title);
         ListView listView = (ListView) dialogView.findViewById(R.id.lv_items);
-        listView.setAdapter(mAdapter);
+        listView.setAdapter(adapter);
 
         final AlertDialog dialog = new AlertDialog.Builder(this)
                 .setView(dialogView).show();
@@ -457,7 +496,7 @@ public class MineActivity extends BaseActivity
                     @Override
                     public void gotResult(int i, String s) {
                         if (i == 0) {
-                            postNewInfo2Server(name,"real_name");
+                            postNewInfo2Server(name, "real_name");
                             mHandler.sendEmptyMessage(HandlerKey.UPDATE_SUCCESS);
                         } else {
                             mHandler.sendEmptyMessage(HandlerKey.UPDATE_FAIL);
@@ -465,10 +504,10 @@ public class MineActivity extends BaseActivity
                     }
                 });
             } else {
-                showSnackBarLong(clMine,"昵称不能超过十个字");
+                showSnackBarLong(clMine, "昵称不能超过十个字");
             }
         } else {
-            showSnackBarLong(clMine,"你没有输入任何信息");
+            showSnackBarLong(clMine, "你没有输入任何信息");
         }
     }
 
@@ -486,7 +525,7 @@ public class MineActivity extends BaseActivity
             @Override
             public void gotResult(int i, String s) {
                 if (i == 0) {
-                    postNewInfo2Server(gender+"","sex");
+                    postNewInfo2Server(gender + "", "sex");
 //                    mHandler.sendEmptyMessage(HandlerKey.UPDATE_SUCCESS);
                 } else {
                     mHandler.sendEmptyMessage(HandlerKey.UPDATE_FAIL);
@@ -503,7 +542,7 @@ public class MineActivity extends BaseActivity
             @Override
             public void gotResult(int i, String s) {
                 if (i == 0) {
-                    postNewInfo2Server(date+"","birthday");
+                    postNewInfo2Server(date + "", "birthday");
                     mHandler.sendEmptyMessage(HandlerKey.UPDATE_SUCCESS);
                 } else {
                     mHandler.sendEmptyMessage(HandlerKey.UPDATE_FAIL);
@@ -523,7 +562,7 @@ public class MineActivity extends BaseActivity
                             @Override
                             public void gotResult(int i, String s) {
                                 if (i == 0) {
-                                    postNewInfo2Server(signature,"signature");
+                                    postNewInfo2Server(signature, "signature");
                                     mHandler.sendEmptyMessage(HandlerKey.UPDATE_SUCCESS);
                                 } else {
                                     mHandler.sendEmptyMessage(HandlerKey.UPDATE_FAIL);
@@ -531,10 +570,10 @@ public class MineActivity extends BaseActivity
                             }
                         });
             } else {
-                showSnackBarLong(clMine,"输入信息过长");
+                showSnackBarLong(clMine, "输入信息过长");
             }
         } else {
-            showSnackBarLong(clMine,"你没有输入任何信息");
+            showSnackBarLong(clMine, "你没有输入任何信息");
         }
     }
 
@@ -549,7 +588,7 @@ public class MineActivity extends BaseActivity
                             @Override
                             public void gotResult(int i, String s) {
                                 if (i == 0) {
-                                    postNewInfo2Server(schoolName,"schoolName");
+                                    postNewInfo2Server(schoolName, "schoolName");
                                     mHandler.sendEmptyMessage(HandlerKey.UPDATE_SUCCESS);
                                 } else {
                                     mHandler.sendEmptyMessage(HandlerKey.UPDATE_FAIL);
@@ -557,16 +596,16 @@ public class MineActivity extends BaseActivity
                             }
                         });
             } else {
-                showSnackBarLong(clMine,"输入信息过长");
+                showSnackBarLong(clMine, "输入信息过长");
             }
         } else {
-            showSnackBarLong(clMine,"你没有输入任何信息");
+            showSnackBarLong(clMine, "你没有输入任何信息");
         }
     }
 
     //设置入学年份
     private void setStartSchoolYear(final String year) {
-        postNewInfo2Server(year,"start_School_Year");
+        postNewInfo2Server(year, "start_School_Year");
     }
 
     //设置头像
@@ -577,7 +616,7 @@ public class MineActivity extends BaseActivity
                 @Override
                 public void gotResult(int i, String s) {
                     if (i == 0) {
-                        QiniuCloudUtil.upLoadImage(path,null,mHandler);
+                        QiniuCloudUtil.upLoadImage(path, null, mHandler);
                         mHandler.sendEmptyMessage(HandlerKey.UPDATE_SUCCESS);
                     } else {
                         mHandler.sendEmptyMessage(HandlerKey.UPDATE_FAIL);
@@ -589,92 +628,99 @@ public class MineActivity extends BaseActivity
 
     //从服务器获取用户信息
     private void getUserInfo() {
-        RequestParams params = new RequestParams(URL+"QueryUser");
-        params.setConnectTimeout(8000);
+        String name;
         if ("mine".equals(type)) {
-            params.addBodyParameter("username",mUserInfo.getUserName());
+            name = mUserInfo.getUserName();
         } else {
-            params.addBodyParameter("username",type);
+            name = type;
         }
+        mPresenter.getUserInfo(name);
 
-        x.http().post(params, new Callback.CacheCallback<String>() {
-            @Override
-            public boolean onCache(String result) {
+//        RequestParams params = new RequestParams(URL + "QueryUser");
+//        params.setConnectTimeout(8000);
+//        if ("mine".equals(type)) {
+//            params.addBodyParameter("username", mUserInfo.getUserName());
+//        } else {
+//            params.addBodyParameter("username", type);
+//        }
+//
+//        x.http().post(params, new Callback.CacheCallback<String>() {
+//            @Override
+//            public boolean onCache(String result) {
+////                if (!"fail".equals(result)) {
+////                    Gson gson = new Gson();
+////                    mUser = gson.fromJson(result,Tb_user.class);
+////                    tvStartSchoolYear.setText(mUser.getStartSchoolYear());
+////                }
+//                return false;
+//            }
+//
+//            @Override
+//            public void onSuccess(String result) {
 //                if (!"fail".equals(result)) {
 //                    Gson gson = new Gson();
-//                    mUser = gson.fromJson(result,Tb_user.class);
+//                    mUser = gson.fromJson(result, Tb_user.class);
 //                    tvStartSchoolYear.setText(mUser.getStartSchoolYear());
 //                }
-                return false;
-            }
-
-            @Override
-            public void onSuccess(String result) {
-                if (!"fail".equals(result)) {
-                    Gson gson = new Gson();
-                    mUser = gson.fromJson(result,Tb_user.class);
-                    tvStartSchoolYear.setText(mUser.getStartSchoolYear());
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
+//            }
+//
+//            @Override
+//            public void onError(Throwable ex, boolean isOnCallback) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(CancelledException cex) {
+//
+//            }
+//
+//            @Override
+//            public void onFinished() {
+//
+//            }
+//        });
     }
 
     //将信息更新到服务器
     private void postNewInfo2Server(final String update, final String target) {
-        RequestParams params = new RequestParams(URL+"Mine");
-        params.setConnectTimeout(8000);
-        params.addBodyParameter("type","information");
-        params.addBodyParameter("username",mUserInfo.getUserName());
-        params.addBodyParameter("update",update);
-        params.addBodyParameter("target",target);
-
-        x.http().post(params, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                if ("success".equals(result)) {
-                    if (target.equals("start_School_Year")) {
-                        tvStartSchoolYear.setText(update);
-                        mHandler.sendEmptyMessage(HandlerKey.UPDATE_SUCCESS);
-                    } else {
-//                        mHandler.sendEmptyMessage(HandlerKey.UPDATE_FAIL);
-                    }
-                } else {
-                    Log.i("MineActivity", "onSuccess: MineActivity更新失败");
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                if (target.equals("start_School_Year")) {
-                    mHandler.sendEmptyMessage(HandlerKey.UPDATE_FAIL);
-                }
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
-            }
-        });
+        mPresenter.updateInfo(mUserInfo.getUserName(), update, target);
+//        RequestParams params = new RequestParams(URL + "Mine");
+//        params.setConnectTimeout(8000);
+//        params.addBodyParameter("type", "information");
+//        params.addBodyParameter("username", mUserInfo.getUserName());
+//        params.addBodyParameter("update", update);
+//        params.addBodyParameter("target", target);
+//
+//        x.http().post(params, new Callback.CommonCallback<String>() {
+//            @Override
+//            public void onSuccess(String result) {
+//                if ("success".equals(result)) {
+//                    if (target.equals("start_School_Year")) {
+//                        tvStartSchoolYear.setText(update);
+//                        mHandler.sendEmptyMessage(HandlerKey.UPDATE_SUCCESS);
+//                    }
+//                } else {
+//                    Log.i("MineActivity", "onSuccess: MineActivity更新失败");
+//                }
+//            }
+//
+//            @Override
+//            public void onError(Throwable ex, boolean isOnCallback) {
+//                if (target.equals("start_School_Year")) {
+//                    mHandler.sendEmptyMessage(HandlerKey.UPDATE_FAIL);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(CancelledException cex) {
+//
+//            }
+//
+//            @Override
+//            public void onFinished() {
+//
+//            }
+//        });
     }
 
     //获取上个界面返回的数据
@@ -696,7 +742,7 @@ public class MineActivity extends BaseActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!type.equals("mine")) {
-            getMenuInflater().inflate(R.menu.menu_delete_friend,menu);
+            getMenuInflater().inflate(R.menu.menu_delete_friend, menu);
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -711,15 +757,15 @@ public class MineActivity extends BaseActivity
                 new AlertDialog.Builder(this)
                         .setTitle("删除好友")
                         .setMessage("同时会将我从对方的好友列表中删除，确定继续这个操作？")
-                        .setNegativeButton("取消",null)
+                        .setNegativeButton("取消", null)
                         .setPositiveButton("删除",
                                 new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //删除好友
-                        deleteFriend(mUserInfo.getUserName());
-                    }
-                }).show();
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        //删除好友
+                                        deleteFriend(mUserInfo.getUserName());
+                                    }
+                                }).show();
 
                 break;
         }
@@ -732,7 +778,7 @@ public class MineActivity extends BaseActivity
         mProgressDialog.show();
 
         RequestParams params = new RequestParams(URL + "FriendsManager");
-        params.addBodyParameter("type","deleteFriend");
+        params.addBodyParameter("type", "deleteFriend");
         params.addBodyParameter("friend_name", friendName);
         params.addBodyParameter("user_name", application.getMyInfo().getUserName());
         params.setConnectTimeout(8000);

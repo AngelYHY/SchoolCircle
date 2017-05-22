@@ -54,4 +54,5 @@ dependencies {
 
     compile 'pub.devrel:easypermissions:0.2.1'
 
+    compile 'de.hdodenhof:circleimageview:2.1.0'
 }

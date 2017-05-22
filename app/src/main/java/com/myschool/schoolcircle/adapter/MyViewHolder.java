@@ -4,10 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.myschool.schoolcircle.main.R;
 
 /**
  * Created by Mr.R on 2016/7/13.

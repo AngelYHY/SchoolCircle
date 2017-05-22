@@ -41,8 +41,7 @@ import cn.jpush.im.api.BasicCallback;
 /**
  * Created by Mr.R on 2016/8/14.
  */
-public class SingleChat extends BaseActivity
-        implements SwipeRefreshLayout.OnRefreshListener {
+public class SingleChat extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.tb_chat)
     Toolbar tbChat;

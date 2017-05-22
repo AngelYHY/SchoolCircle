@@ -18,41 +18,41 @@
             android:layout_height="@dimen/toolbar_height"
             android:background="@color/colorPrimary"
             android:elevation="@dimen/elevation_height"
+            app:theme="@style/ToolbarTheme"
             app:title="活动详情"
-            app:titleTextColor="@color/white"
-            app:theme="@style/ToolbarTheme"/>
+            app:titleTextColor="@color/white"/>
 
         <RelativeLayout
             android:id="@+id/rl_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:layout_alignParentBottom="true"
+            android:background="@color/white"
             android:elevation="@dimen/elevation_height">
 
             <EditText
                 android:id="@+id/et_input"
-                android:hint="说点什么..."
-                android:textSize="@dimen/size_txt_chat_body"
-                android:maxLength="100"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_64"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:hint="说点什么..."
+                android:maxLength="100"
                 android:minHeight="@dimen/size_48"
+                android:paddingBottom="@dimen/margin_4"
                 android:paddingLeft="@dimen/margin_16"
                 android:paddingRight="@dimen/margin_16"
                 android:paddingTop="@dimen/margin_4"
-                android:paddingBottom="@dimen/margin_4"
-                android:layout_marginRight="@dimen/margin_64"
-                android:gravity="center_vertical"
-                android:background="@color/white"/>
+                android:textSize="@dimen/size_txt_chat_body"/>
         </RelativeLayout>
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/srl_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/tb_activity_detail"
-            android:layout_above="@+id/rl_input">
+            android:layout_above="@+id/rl_input"
+            android:layout_below="@id/tb_activity_detail">
 
             <com.myschool.schoolcircle.widget.LoadListView
                 android:id="@+id/lv_activity_detail"
@@ -66,19 +66,19 @@
             android:id="@+id/pv_activity"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
             android:background="@color/viewfinder_mask"
-            android:elevation="8dp"/>
+            android:elevation="8dp"
+            android:visibility="gone"/>
     </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/margin_16"
         android:src="@mipmap/ic_send_white_48dp"
+        android:visibility="gone"
         app:fabSize="normal"
         app:layout_anchor="@id/rl_input"
-        app:layout_anchorGravity="right"
-        android:layout_marginRight="@dimen/margin_16"
-        android:visibility="gone"/>
+        app:layout_anchorGravity="right"/>
 </android.support.design.widget.CoordinatorLayout>

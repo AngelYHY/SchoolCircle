@@ -38,7 +38,7 @@ import com.google.gson.Gson;
 import com.myschool.schoolcircle.base.BaseActivity;
 import com.myschool.schoolcircle.entity.Tb_user;
 import com.myschool.schoolcircle.main.R;
-import com.myschool.schoolcircle.presenter.impl.WelcomePresent;
+import com.myschool.schoolcircle.presenter.impl.WelcomePresenterImpl;
 import com.myschool.schoolcircle.ui.activity.MainActivity;
 import com.myschool.schoolcircle.utils.HandlerKey;
 import com.myschool.schoolcircle.utils.ProgressDialogUtil;
@@ -62,10 +62,13 @@ import cn.jpush.im.android.api.event.LoginStateChangeEvent;
 import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
 
+/***
+ * 登录界面
+ */
 public class WelcomeActivity extends BaseActivity implements WelcomeView {
 
     @Inject
-    WelcomePresent mPresenter;
+    WelcomePresenterImpl mPresenter;
 
     @Bind(R.id.iv_logo)
     ImageView ivLogo;

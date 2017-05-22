@@ -12,7 +12,6 @@ import android.os.Vibrator;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -21,29 +20,33 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.myschool.schoolcircle.adapter.DynamicRecyclerAdapter;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.myschool.schoolcircle.adapter.DynamicRecyclerAdapterDemo;
 import com.myschool.schoolcircle.base.BaseActivity;
 import com.myschool.schoolcircle.entity.Tb_dynamic;
 import com.myschool.schoolcircle.main.R;
+import com.myschool.schoolcircle.presenter.impl.DynamicPresenterImpl;
 import com.myschool.schoolcircle.ui.activity.school.activitys.DetailsItemActivity;
 import com.myschool.schoolcircle.utils.HandlerKey;
 import com.myschool.schoolcircle.utils.HidingScrollListener;
 import com.myschool.schoolcircle.utils.ProgressDialogUtil;
 import com.myschool.schoolcircle.utils.RefreshUtil;
 import com.myschool.schoolcircle.utils.ViewVisibleManager;
+import com.myschool.schoolcircle.view.DynamicView;
+import com.orhanobut.logger.Logger;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -51,17 +54,19 @@ import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.event.LoginStateChangeEvent;
 import uk.co.senab.photoview.PhotoView;
 
-public class DynamicActivity extends BaseActivity
-        implements SwipeRefreshLayout.OnRefreshListener {
+public class DynamicActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener, DynamicView {
+
+    @Inject
+    DynamicPresenterImpl mPresenter;
 
     @Bind(R.id.tb_dynamic)
     Toolbar tbDynamic;
-    @Bind(R.id.rv_dynamic)
-    RecyclerView rvDynamic;
+    @Bind(R.id.recycler_view)
+    RecyclerView mRecyclerView;
     @Bind(R.id.fab_create_dynamic)
     FloatingActionButton fabCreateDynamic;
-    @Bind(R.id.srl_dynamic)
-    SwipeRefreshLayout srlDynamic;
+    @Bind(R.id.refresh)
+    SwipeRefreshLayout mRefreshLayout;
     @Bind(R.id.coor_dynamic)
     CoordinatorLayout coorDynamic;
     @Bind(R.id.et_input)
@@ -77,8 +82,7 @@ public class DynamicActivity extends BaseActivity
     private static final String GET_ALL_DYNAMIC_IN_MY_SCHOOL = "getAllDynamicInMySchool";
 
     private ProgressDialog mProgressDialog;
-    private List<Tb_dynamic> mDynamics;
-    private DynamicRecyclerAdapter adapter;
+
     private int start = 0;
     private boolean isLoading;
     private String type = GET_ALL_DYNAMIC;
@@ -107,14 +111,14 @@ public class DynamicActivity extends BaseActivity
                     if (isShack) {
                         isShack = false;
                     }
-                    srlDynamic.setRefreshing(false);
+                    mRefreshLayout.setRefreshing(false);
                     break;
 
                 case HandlerKey.REFRESH_FAIL:
                     if (!isShack) {
                         isShack = false;
                     }
-                    srlDynamic.setRefreshing(false);
+                    mRefreshLayout.setRefreshing(false);
                     break;
                 case HandlerKey.TRUE:
                     fabCreateDynamic.setImageResource(R.mipmap.ic_send_white_48dp);
@@ -124,6 +128,7 @@ public class DynamicActivity extends BaseActivity
             }
         }
     };
+    private DynamicRecyclerAdapterDemo mAdapter;
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
@@ -141,6 +146,14 @@ public class DynamicActivity extends BaseActivity
 //        //事件接收类的注册
 //        JMessageClient.registerEventReceiver(this);
 //        initView();
+//    }
+
+
+//    @Override
+//    protected void initInjector() {
+//        super.initInjector();
+//        mActivityComponent.inject(this);
+//        mIPresenter = mPresenter;
 //    }
 
     private void init() {
@@ -208,16 +221,16 @@ public class DynamicActivity extends BaseActivity
             lastZ = z;
             double speed = (Math.sqrt(deltaX * deltaX + deltaY * deltaY
                     + deltaZ * deltaZ) / timeInterval) * 100;
-            if (speed >= SPEED_SHRESHOLD) {
+//            if (speed >= SPEED_SHRESHOLD) {
 //                if (onShake && shackSwitch != -1 && !isShack
-//                        && !srlDynamic.isRefreshing() && !isLoading) {
+//                        && !mRefreshLayout.isRefreshing() && !isLoading) {
 //                    isShack = true;
 //                    //震动300毫秒
 //                    vibrator.vibrate(300);
 //                    rvDynamic.smoothScrollToPosition(0);
 //                    doRefresh();
 //                }
-            }
+//            }
         }
 
         @Override
@@ -230,7 +243,10 @@ public class DynamicActivity extends BaseActivity
         eventAction(event, this);
     }
 
+    @Override
     protected void initView() {
+        Logger.e("initView");
+        mPresenter.attachView(this);
         init();
 
         //获取系统传感器服务
@@ -245,8 +261,11 @@ public class DynamicActivity extends BaseActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mProgressDialog = ProgressDialogUtil.getProgressDialog(this, "正在转发...");
-        RefreshUtil.initRefreshView(srlDynamic, this);
-        initRecyclerView();
+        RefreshUtil.initRefreshView(mRefreshLayout, this);
+
+        onRefresh();
+
+        initRV();
     }
 
     @Override
@@ -254,35 +273,47 @@ public class DynamicActivity extends BaseActivity
         return R.layout.layout_activity_dynamic;
     }
 
-    private void initRecyclerView() {
-        mDynamics = new ArrayList<>();
-        rvDynamic.setLayoutManager(new LinearLayoutManager(this));
+    private void initRV() {
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new DynamicRecyclerAdapter(this, mDynamics);
-        adapter.setOnItemClickListener(new DynamicRecyclerAdapter.OnItemClickListener() {
+        mAdapter = new DynamicRecyclerAdapterDemo(R.layout.item_dynamic);
+        mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(DynamicActivity.this, DetailsItemActivity.class);
+                intent.putExtra("dynamicData", (Tb_dynamic) adapter.getItem(position));
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 switch (view.getId()) {
-                    case R.id.cv_dynamic:
-                        Intent intent = new Intent(DynamicActivity.this,
-                                DetailsItemActivity.class);
-                        intent.putExtra("dynamicData",mDynamics.get(position));
-                        startActivity(intent);
-                        break;
                     case R.id.cb_retransmission:
                         showInput(position);
                         break;
-                    default:
+                    case R.id.cb_like:
+                        CheckBox cb = (CheckBox) view;
+                        String s = cb.getText().toString();
+                        int num = Integer.parseInt(s);
+                        // TODO: 2017/5/20 0020 点击后服务器没有更新数据
+                        if (cb.isChecked()) {
+                            cb.setText(String.format("%s", num + 1));
+                        } else {
+                            if (num > 0) {
+                                cb.setText(String.format("%s", num - 1));
+                            }
+                        }
                         break;
                 }
             }
         });
 
-        rvDynamic.setAdapter(adapter);
-        rvDynamic.setItemAnimator(new DefaultItemAnimator());
-        doRefresh();
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.openLoadAnimation();
+        mAdapter.setPreLoadNumber(PAGE_SIZE);
+        mAdapter.setOnLoadMoreListener(this, mRecyclerView);
 
-        rvDynamic.setOnScrollListener(new HidingScrollListener() {
+        mRecyclerView.addOnScrollListener(new HidingScrollListener() {
             @Override
             public void onHide() {
                 ViewVisibleManager.hideViews(tbDynamic, fabCreateDynamic);
@@ -294,44 +325,27 @@ public class DynamicActivity extends BaseActivity
             }
         });
 
-        final LinearLayoutManager manager =
-                (LinearLayoutManager) rvDynamic.getLayoutManager();
-
-        rvDynamic.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (dy > 50) {
-                    int lastItemIndex = manager.findLastVisibleItemPosition();
-                    //滑动到最后一个并且状态不是加载中,执行加载更多，isLoading默认值false
-                    if (lastItemIndex >= mDynamics.size() - 1 && !isLoading) {
-                        loadMore();
-                    }
-                }
-            }
-        });
     }
 
     //加载更多
     private void loadMore() {
-        mDynamics.add(null);
-        adapter.notifyItemInserted(mDynamics.size() - 1);
-        isLoading = true;
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-
-//                    start += 5;
-                    Thread.sleep(600);
-                    getAllDynamic();
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
+//        mDynamics.add(null);
+//        adapter.notifyItemInserted(mDynamics.size() - 1);
+//        isLoading = true;
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                try {
+//
+////                    start += 5;
+//                    Thread.sleep(600);
+//                    getAllDynamic();
+//
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }.start();
     }
 
     @Override
@@ -353,11 +367,11 @@ public class DynamicActivity extends BaseActivity
 //                break;
             case R.id.menu_dynamic_all:
                 type = GET_ALL_DYNAMIC;
-                doRefresh();
+                onRefresh();
                 break;
             case R.id.menu_dynamic_my_school:
                 type = GET_ALL_DYNAMIC_IN_MY_SCHOOL;
-                doRefresh();
+                onRefresh();
                 break;
             default:
                 break;
@@ -367,8 +381,8 @@ public class DynamicActivity extends BaseActivity
 
     //显示输入框
     public void showInput(int position) {
-        retransmissionDynamicId = mDynamics.get(position).get_id();
-        rvDynamic.smoothScrollToPosition(position);
+        retransmissionDynamicId = mAdapter.getItem(position).get_id();
+        mRecyclerView.smoothScrollToPosition(position);
         vEmpty.setVisibility(View.VISIBLE);
         rlInput.setVisibility(View.VISIBLE);
         etInput.setFocusable(true);
@@ -435,33 +449,38 @@ public class DynamicActivity extends BaseActivity
 
     @Override
     public void onRefresh() {
-        new Thread(new Runnable() {
+        Logger.e("onRefresh");
+        start = 0;
+        mRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
-                try {
-
-                    doRefresh();
-                    Thread.sleep(500);//休眠0.5秒
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                mHandler.sendEmptyMessage(HandlerKey.REFRESH_SUCCESS);
+                mRefreshLayout.setRefreshing(true);
             }
-        }).start();
+        });
+
+        String schoolName = null;
+        if (type.equals(GET_ALL_DYNAMIC_IN_MY_SCHOOL)) {
+            schoolName = application.getMyInfo().getRegion();
+            if (schoolName.isEmpty()) {
+                showSnackBarLong(coorDynamic, "你还没有设置学校信息");
+            }
+        }
+        mPresenter.getDynamic(type, start + "", schoolName);
+
     }
 
     //刷新
     private void doRefresh() {
         start = 0;
-        if (!srlDynamic.isRefreshing()) {
-            srlDynamic.setRefreshing(true);
+        if (!mRefreshLayout.isRefreshing()) {
+            mRefreshLayout.setRefreshing(true);
         }
         getAllDynamic();
     }
 
     //请求获得所有数据
     private void getAllDynamic() {
+
         RequestParams params = new RequestParams(URL + "Dynamic");
         params.addBodyParameter("type", type);
         params.addBodyParameter("start", start + "");
@@ -482,12 +501,12 @@ public class DynamicActivity extends BaseActivity
 
             @Override
             public void onSuccess(String result) {
-                loadData(result);
+//                loadData(result);
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                showSnackBarLong(coorDynamic,"网络貌似出了点问题~");
+                showSnackBarLong(coorDynamic, "网络貌似出了点问题~");
             }
 
             @Override
@@ -504,44 +523,44 @@ public class DynamicActivity extends BaseActivity
 
     //加载数据
     private void loadData(String result) {
-        if (!"nothing".equals(result)) {
-            Gson gson = new Gson();
-            Type type = new TypeToken<ArrayList<Tb_dynamic>>() {
-            }.getType();
-            List<Tb_dynamic> data = gson.fromJson(result, type);
-            if (isLoading) {
-                //如果是上拉加载
-                mDynamics.remove(mDynamics.size() - 1);
-                adapter.notifyItemRemoved(mDynamics.size());
-                mDynamics.addAll(data);
-                isLoading = false;
-            } else {
-                mDynamics.clear();
-                mDynamics.addAll(data);
-            }
-            start = mDynamics.size();
-            adapter.notifyDataSetChanged();
-
-        } else {
-            if (isLoading) {
-                //如果是上拉加载
-                mDynamics.remove(mDynamics.size() - 1);
-                adapter.notifyItemRemoved(mDynamics.size());
-                isLoading = false;
-            } else {
-                mDynamics.clear();
-                adapter.notifyDataSetChanged();
-            }
-            showSnackBarLong(coorDynamic, "暂无更多动态");
-        }
-        mHandler.sendEmptyMessageDelayed(HandlerKey.REFRESH_SUCCESS, 600);
+//        if (!"nothing".equals(result)) {
+//            Gson gson = new Gson();
+//            Type type = new TypeToken<ArrayList<Tb_dynamic>>() {
+//            }.getType();
+//            List<Tb_dynamic> data = gson.fromJson(result, type);
+//            if (isLoading) {
+//                //如果是上拉加载
+//                mDynamics.remove(mDynamics.size() - 1);
+//                adapter.notifyItemRemoved(mDynamics.size());
+//                mDynamics.addAll(data);
+//                isLoading = false;
+//            } else {
+//                mDynamics.clear();
+//                mDynamics.addAll(data);
+//            }
+//            start = mDynamics.size();
+//            adapter.notifyDataSetChanged();
+//
+//        } else {
+//            if (isLoading) {
+//                //如果是上拉加载
+//                mDynamics.remove(mDynamics.size() - 1);
+//                adapter.notifyItemRemoved(mDynamics.size());
+//                isLoading = false;
+//            } else {
+//                mDynamics.clear();
+//                adapter.notifyDataSetChanged();
+//            }
+//            showSnackBarLong(coorDynamic, "暂无更多动态");
+//        }
+//        mHandler.sendEmptyMessageDelayed(HandlerKey.REFRESH_SUCCESS, 600);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 825 && resultCode == RESULT_OK) {
-            doRefresh();
+            onRefresh();
         }
     }
 
@@ -580,4 +599,72 @@ public class DynamicActivity extends BaseActivity
                 break;
         }
     }
+
+    @Override
+    public void onLoadMoreRequested() {
+        String schoolName = null;
+        if (type.equals(GET_ALL_DYNAMIC_IN_MY_SCHOOL)) {
+            schoolName = application.getMyInfo().getRegion();
+            if (schoolName.isEmpty()) {
+                showSnackBarLong(coorDynamic, "你还没有设置学校信息");
+            }
+        }
+        mPresenter.getDynamic(type, start + "", schoolName);
+
+    }
+
+    @Override
+    public void response(List<Tb_dynamic> list, boolean hasMore) {
+        mRefreshLayout.post(new Runnable() {
+
+            @Override
+            public void run() {
+                mRefreshLayout.setRefreshing(false);
+            }
+        });
+
+        if (start == 0) {
+            mAdapter.setNewData(list);
+        } else {
+            mAdapter.addData(list);
+            mAdapter.loadMoreComplete();
+        }
+
+        if (!hasMore) {
+            mAdapter.loadMoreEnd();
+        }
+
+//        if (!"nothing".equals(result)) {
+//            Gson gson = new Gson();
+//            Type type = new TypeToken<ArrayList<Tb_dynamic>>() {
+//            }.getType();
+//            List<Tb_dynamic> data = gson.fromJson(result, type);
+//            if (isLoading) {
+//                //如果是上拉加载
+//                mDynamics.remove(mDynamics.size() - 1);
+//                adapter.notifyItemRemoved(mDynamics.size());
+//                mDynamics.addAll(data);
+//                isLoading = false;
+//            } else {
+//                mDynamics.clear();
+//                mDynamics.addAll(data);
+//            }
+//            start = mDynamics.size();
+//            adapter.notifyDataSetChanged();
+//
+//        } else {
+//            if (isLoading) {
+//                //如果是上拉加载
+//                mDynamics.remove(mDynamics.size() - 1);
+//                adapter.notifyItemRemoved(mDynamics.size());
+//                isLoading = false;
+//            } else {
+//                mDynamics.clear();
+//                adapter.notifyDataSetChanged();
+//            }
+//            showSnackBarLong(coorDynamic, "暂无更多动态");
+//        }
+//        mHandler.sendEmptyMessageDelayed(HandlerKey.REFRESH_SUCCESS, 600);
+    }
+
 }

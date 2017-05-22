@@ -75,9 +75,9 @@ public class DynamicRecyclerViewHolder extends RecyclerView.ViewHolder {
         NineGridView nineGridView = (NineGridView) parent.findViewById(R.id.ngv_dynamic);
         PhotoView mPhotoView = (PhotoView) parent.findViewById(R.id.photo_view);
 
-        return new DynamicRecyclerViewHolder(parent,civAvatar,tvRealName,
-                tvSchoolName, tvTextContent, tvTime,cbRetransmission,cbComment,cbLike,
-                cardView,nineGridView,mPhotoView);
+        return new DynamicRecyclerViewHolder(parent, civAvatar, tvRealName,
+                tvSchoolName, tvTextContent, tvTime, cbRetransmission, cbComment, cbLike,
+                cardView, nineGridView, mPhotoView);
     }
 
     //设置头像
@@ -87,7 +87,7 @@ public class DynamicRecyclerViewHolder extends RecyclerView.ViewHolder {
                 .setLoadingDrawableId(R.mipmap.ic_head)
                 .setFailureDrawableId(R.mipmap.ic_head)
                 .build();
-        x.image().bind(ivAvatar,imageUrl,options);
+        x.image().bind(ivAvatar, imageUrl, options);
     }
 
     public void setRealNameText(CharSequence text) {
@@ -118,8 +118,8 @@ public class DynamicRecyclerViewHolder extends RecyclerView.ViewHolder {
         cbComment.setText(num);
     }
 
-    public void setNineGridView(Context context,List<ImageInfo> images) {
-        nineGridView.setAdapter(new NineGridViewClickAdapter(context,images));
+    public void setNineGridView(Context context, List<ImageInfo> images) {
+        nineGridView.setAdapter(new NineGridViewClickAdapter(context, images));
     }
 
 }

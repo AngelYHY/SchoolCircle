@@ -19,7 +19,7 @@ public class RefreshUtil {
                 R.color.red);
         refreshView.setSize(SwipeRefreshLayout.DEFAULT);//进度条大小
         refreshView.setProgressBackgroundColorSchemeResource(R.color.white);//进度条背景颜色
-        refreshView.setProgressViewOffset(true,-80,220);
+        refreshView.setProgressViewOffset(true, -80, 220);
         refreshView.setOnRefreshListener(listener);
     }
 
@@ -32,6 +32,6 @@ public class RefreshUtil {
                 R.color.red);
         refreshView.setSize(SwipeRefreshLayout.DEFAULT);//进度条大小
         refreshView.setProgressBackgroundColorSchemeResource(R.color.white);//进度条背景颜色
-        refreshView.setProgressViewOffset(true,-80,220);
+        refreshView.setProgressViewOffset(true, -80, 220);
     }
 }

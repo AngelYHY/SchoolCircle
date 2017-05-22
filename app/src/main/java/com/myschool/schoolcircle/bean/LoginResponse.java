@@ -9,7 +9,7 @@ import com.myschool.schoolcircle.entity.Tb_user;
  * github：
  */
 
-public class LoginResponse {
+public class LoginResponse extends Base{
 
     /**
      * use : {"user_id":69,"username":"zhengrj","password":"123456","realName":"仁杰","phone":"15359600015","gender":"男","birthday":"1994-09-05","startSchoolYear":"2013","signature":"我的风格～","headView":"http://oap9ibq03.bkt.clouddn.com/FkFxeKO3EkUuBjxHxDA3-wzj-Fgy"}
@@ -18,8 +18,6 @@ public class LoginResponse {
      */
 
     private Tb_user use;
-    private String errorMsg;
-    private boolean success;
 
     public Tb_user getUse() {
         return use;
@@ -27,22 +25,6 @@ public class LoginResponse {
 
     public void setUse(Tb_user use) {
         this.use = use;
-    }
-
-    public String getErrorMsg() {
-        return errorMsg;
-    }
-
-    public void setErrorMsg(String errorMsg) {
-        this.errorMsg = errorMsg;
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
     }
 
 //    public static class UseBean {

@@ -105,5 +105,21 @@ public class Tb_dynamic implements Serializable{
 	public void setImages(List<String> images) {
 		this.images = images;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Tb_dynamic{" +
+				"_id=" + _id +
+				", avatar='" + avatar + '\'' +
+				", username='" + username + '\'' +
+				", realName='" + realName + '\'' +
+				", textContent='" + textContent + '\'' +
+				", imageList='" + imageList + '\'' +
+				", images=" + images +
+				", datetime='" + datetime + '\'' +
+				", likeNum=" + likeNum +
+				", commentNum=" + commentNum +
+				", schoolName='" + schoolName + '\'' +
+				'}';
+	}
 }

@@ -52,8 +52,10 @@ import cn.jpush.im.android.api.event.LoginStateChangeEvent;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
-public class ActivityDetailActivity extends BaseActivity
-        implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+/**
+ * 活动详情
+ */
+public class ActivityDetailActivity extends BaseActivity implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.tb_activity_detail)
     Toolbar tbActivityDetail;

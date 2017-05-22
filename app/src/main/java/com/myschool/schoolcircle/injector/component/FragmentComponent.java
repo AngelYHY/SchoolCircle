@@ -6,6 +6,7 @@ import android.content.Context;
 import com.myschool.schoolcircle.injector.ContextLife;
 import com.myschool.schoolcircle.injector.PerFragment;
 import com.myschool.schoolcircle.injector.module.FragmentModule;
+import com.myschool.schoolcircle.ui.fragment.DynamicFragment;
 
 import dagger.Component;
 
@@ -22,5 +23,7 @@ public interface FragmentComponent {
     Context getActivityContext();
 
     Activity getActivity();
+
+    void inject(DynamicFragment fragment);
 
 }

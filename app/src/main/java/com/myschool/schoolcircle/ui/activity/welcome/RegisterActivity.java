@@ -24,13 +24,18 @@ import com.google.gson.Gson;
 import com.myschool.schoolcircle.base.BaseActivity;
 import com.myschool.schoolcircle.entity.Tb_school;
 import com.myschool.schoolcircle.entity.Tb_user;
+import com.myschool.schoolcircle.presenter.impl.RegisterPresenterImpl;
 import com.myschool.schoolcircle.ui.activity.MainActivity;
 import com.myschool.schoolcircle.main.R;
 import com.myschool.schoolcircle.utils.HandlerKey;
+import com.myschool.schoolcircle.view.RegisterView;
+import com.orhanobut.logger.Logger;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -38,7 +43,10 @@ import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.event.LoginStateChangeEvent;
 import cn.jpush.im.api.BasicCallback;
 
-public class RegisterActivity extends BaseActivity {
+public class RegisterActivity extends BaseActivity implements RegisterView {
+
+    @Inject
+    RegisterPresenterImpl mPresenter;
 
     @Bind(R.id.tb_register)
     Toolbar tbRegister;
@@ -114,7 +122,15 @@ public class RegisterActivity extends BaseActivity {
         //注册界面无需具体实现此方法，空实现即可
     }
 
+    @Override
+    protected void initInjector() {
+        super.initInjector();
+        mActivityComponent.inject(this);
+        mIPresenter = mPresenter;
+    }
+
     protected void initView() {
+        mPresenter.attachView(this);
         Intent intent = getIntent();
         phone = intent.getStringExtra("phone");
 
@@ -215,7 +231,8 @@ public class RegisterActivity extends BaseActivity {
                     //验证通过
                     dialog.show();
                     //先向自己的服务器进行注册
-                    doRegister(phone, username, password);
+//                    doRegister(phone, username, password);
+                    mPresenter.register(phone, username, password);
                 }
                 hideSoftInput(etUsername);
                 hideSoftInput(etPassword);
@@ -233,11 +250,11 @@ public class RegisterActivity extends BaseActivity {
                     //验证通过
                     return true;
                 } else {
-                    showSnackBarLong(clRegister,"密码不能超过20位");
+                    showSnackBarLong(clRegister, "密码不能超过20位");
                     return false;
                 }
             } else {
-                showSnackBarLong(clRegister,"用户名不能超过20位");
+                showSnackBarLong(clRegister, "用户名不能超过20位");
                 return false;
             }
         } else {
@@ -306,8 +323,10 @@ public class RegisterActivity extends BaseActivity {
                         if (i == 0) {
                             msg.obj = user;
                             msg.what = HandlerKey.J_REGISTER_SUCCESS;
+                            Logger.e("0");
                         } else {
                             msg.what = HandlerKey.J_REGISTER_FAIL;
+                            Logger.e("fail");
                         }
                         handler.sendMessage(msg);
                     }
@@ -342,4 +361,14 @@ public class RegisterActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void response(boolean success, Tb_user user) {
+        if (success) {
+            application.setUser(user);
+            JRegister(user);
+        } else {
+            dialog.cancel();
+            showSnackBarLong(clRegister, R.string.register_fail);
+        }
+    }
 }

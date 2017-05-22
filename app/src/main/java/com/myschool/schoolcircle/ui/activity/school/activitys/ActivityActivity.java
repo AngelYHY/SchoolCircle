@@ -46,8 +46,7 @@ import cn.jpush.im.android.api.event.LoginStateChangeEvent;
 import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
-public class ActivityActivity extends BaseActivity
-        implements SwipeRefreshLayout.OnRefreshListener {
+public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     @Bind(R.id.rv_activity)
     RecyclerView rvActivity;
