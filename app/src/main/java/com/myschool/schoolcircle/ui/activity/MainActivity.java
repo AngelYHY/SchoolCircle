@@ -247,13 +247,13 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
             case R.id.menu_exit:
                 //注销
                 View dialogView = LayoutInflater.from(this)
-                        .inflate(R.layout.dialog_layout_tip,null);
+                        .inflate(R.layout.dialog_layout_tip, null);
                 TextView tvTitle = (TextView) dialogView.findViewById(R.id.tv_title);
                 TextView tvMessage = (TextView) dialogView.findViewById(R.id.tv_message);
                 tvTitle.setText("退出登录");
                 tvMessage.setText("离开后将无法收到好友消息，确定继续？");
                 new AlertDialog.Builder(this).setView(dialogView)
-                        .setNegativeButton("不是现在",null)
+                        .setNegativeButton("不是现在", null)
                         .setPositiveButton("确定",
                                 new DialogInterface.OnClickListener() {
                                     @Override
@@ -305,7 +305,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             if ((System.currentTimeMillis() - exitTime) > 2000) {
-                ToastUtil.showToast(this,"再按一次退出程序", Toast.LENGTH_SHORT);
+                ToastUtil.showToast(this, "再按一次退出程序", Toast.LENGTH_SHORT);
                 exitTime = System.currentTimeMillis();
             } else {
                 finish();

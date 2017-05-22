@@ -185,4 +185,26 @@ public class Tb_activity implements Serializable{
 		this.schoolName = schoolName;
 	}
 
+	@Override
+	public String toString() {
+		return "Tb_activity{" +
+				"id='" + id + '\'' +
+				", avatar='" + avatar + '\'' +
+				", username='" + username + '\'' +
+				", theme='" + theme + '\'' +
+				", activityDescribe='" + activityDescribe + '\'' +
+				", picture='" + picture + '\'' +
+				", sponsor='" + sponsor + '\'' +
+				", number=" + number +
+				", place='" + place + '\'' +
+				", activityBegin='" + activityBegin + '\'' +
+				", activityEnd='" + activityEnd + '\'' +
+				", commentNum=" + commentNum +
+				", likeNum=" + likeNum +
+				", joinNum=" + joinNum +
+				", sDatetime='" + sDatetime + '\'' +
+				", state='" + state + '\'' +
+				", schoolName='" + schoolName + '\'' +
+				'}';
+	}
 }

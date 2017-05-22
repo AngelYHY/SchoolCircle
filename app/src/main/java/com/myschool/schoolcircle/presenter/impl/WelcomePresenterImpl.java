@@ -7,7 +7,6 @@ import com.myschool.schoolcircle.core.RetrofitService;
 import com.myschool.schoolcircle.presenter.WelcomePresenter;
 import com.myschool.schoolcircle.ui.activity.welcome.WelcomeActivity;
 import com.myschool.schoolcircle.view.WelcomeView;
-import com.orhanobut.logger.Logger;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import javax.inject.Inject;
@@ -36,7 +35,6 @@ public class WelcomePresenterImpl extends BasePresenter<WelcomeView> implements 
 
     @Override
     public void login(String name, String psw) {
-        Logger.e(name + "--" + psw);
         mService.login(name, psw)
                 .compose(mView.<LoginResponse>applySchedulers())
                 .compose(mActivity.<LoginResponse>bindUntilEvent(ActivityEvent.DESTROY))

@@ -38,8 +38,7 @@ import cn.jpush.im.android.api.model.UserInfo;
 /**
  * Created by Mr.R on 2016/7/10.
  */
-public class MessageFragment extends BaseFragment implements
-        SwipeRefreshLayout.OnRefreshListener, MainActivity.OnRefreshDataListener {
+public class MessageFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, MainActivity.OnRefreshDataListener {
 
     @Bind(R.id.lv_message)
     ListView lvMessage;
@@ -128,7 +127,7 @@ public class MessageFragment extends BaseFragment implements
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
                 //删除本地数据库聊天记录
                 View dialogView = LayoutInflater.from(activity)
-                        .inflate(R.layout.dialog_layout_tip,null);
+                        .inflate(R.layout.dialog_layout_tip, null);
                 TextView tvTitle = (TextView) dialogView.findViewById(R.id.tv_title);
                 TextView tvMessage = (TextView) dialogView.findViewById(R.id.tv_message);
                 tvTitle.setText("删除聊天");
@@ -216,7 +215,7 @@ public class MessageFragment extends BaseFragment implements
     //对会话列表进行排序
     private void sortItem() {
         Comparator<Conversation> itemComparator = new Comparator<Conversation>() {
-            public int compare(Conversation info1, Conversation info2){
+            public int compare(Conversation info1, Conversation info2) {
 
                 if (info1.getLatestMessage().getCreateTime()
                         > info2.getLatestMessage().getCreateTime()) {

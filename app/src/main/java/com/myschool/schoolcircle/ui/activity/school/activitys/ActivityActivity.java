@@ -48,13 +48,13 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class ActivityActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.rv_activity)
+    @Bind(R.id.recycler_view)
     RecyclerView rvActivity;
     @Bind(R.id.tb_activity)
     Toolbar tbActivity;
     @Bind(R.id.fab_create_activity)
     FloatingActionButton fabCreateActivity;
-    @Bind(R.id.srl_activity)
+    @Bind(R.id.refresh)
     SwipeRefreshLayout srlActivity;
     @Bind(R.id.cl_activity)
     CoordinatorLayout clActivity;

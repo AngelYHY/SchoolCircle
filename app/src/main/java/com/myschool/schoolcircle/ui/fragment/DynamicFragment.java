@@ -30,9 +30,6 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.myschool.schoolcircle.adapter.DynamicRecyclerAdapter;
 import com.myschool.schoolcircle.adapter.DynamicRecyclerAdapterDemo;
 import com.myschool.schoolcircle.base.BaseFragment;
 import com.myschool.schoolcircle.config.Config;
@@ -56,8 +53,6 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -98,8 +93,6 @@ public class DynamicFragment extends BaseFragment implements SwipeRefreshLayout.
     private static final String GET_ALL_DYNAMIC_IN_MY_SCHOOL = "getAllDynamicInMySchool";
 
     private ProgressDialog mProgressDialog;
-    private List<Tb_dynamic> mDynamics;
-    private DynamicRecyclerAdapter adapter;
     private int start = 0;
     private boolean isLoading;
     private String type = GET_ALL_DYNAMIC;
@@ -286,7 +279,7 @@ public class DynamicFragment extends BaseFragment implements SwipeRefreshLayout.
     }
 
     private void initRV() {
-        Logger.e("initRV in fragment");
+        Logger.e("initRv Dynamic");
 //        mDynamics = new ArrayList<>();
 //        mRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
 
@@ -477,7 +470,7 @@ public class DynamicFragment extends BaseFragment implements SwipeRefreshLayout.
     //显示输入框
     public void showInput(int position) {
         MainActivity.layoutRadio.setVisibility(View.GONE);
-        retransmissionDynamicId = mDynamics.get(position).get_id();
+        retransmissionDynamicId = mAdapter.getItem(position).get_id();
         mRecyclerView.smoothScrollToPosition(position);
         vEmpty.setVisibility(View.VISIBLE);
         rlInput.setVisibility(View.VISIBLE);
@@ -535,7 +528,7 @@ public class DynamicFragment extends BaseFragment implements SwipeRefreshLayout.
 
     @Override
     public void onRefresh() {
-        Logger.e("onRefresh");
+        Logger.e("onRefresh dynamic");
         start = 0;
         mRefreshLayout.post(new Runnable() {
             @Override
@@ -544,17 +537,18 @@ public class DynamicFragment extends BaseFragment implements SwipeRefreshLayout.
             }
         });
 
-        String schoolName = null;
-        if (type.equals(GET_ALL_DYNAMIC_IN_MY_SCHOOL)) {
-            schoolName = application.getMyInfo().getRegion();
-            if (schoolName.isEmpty()) {
-                showSnackBarLong(coorDynamic, "你还没有设置学校信息");
-            } else {
-                type = GET_ALL_DYNAMIC;
-                ToastUtil.showToast(activity, "你还没有设置学校信息", Toast.LENGTH_LONG);
-            }
-        }
-        mPresenter.getDynamic(type, start + "", schoolName);
+        onLoadMoreRequested();
+//        String schoolName = null;
+//        if (type.equals(GET_ALL_DYNAMIC_IN_MY_SCHOOL)) {
+//            schoolName = application.getMyInfo().getRegion();
+//            if (schoolName.isEmpty()) {
+//                showSnackBarLong(coorDynamic, "你还没有设置学校信息");
+//            } else {
+//                type = GET_ALL_DYNAMIC;
+//                ToastUtil.showToast(activity, "你还没有设置学校信息", Toast.LENGTH_LONG);
+//            }
+//        }
+//        mPresenter.getDynamic(type, start + "", schoolName);
     }
 
 //    //刷新
@@ -619,37 +613,37 @@ public class DynamicFragment extends BaseFragment implements SwipeRefreshLayout.
 
     //加载数据
     private void loadData(String result) {
-        if (!"nothing".equals(result)) {
-            Gson gson = new Gson();
-            Type type = new TypeToken<ArrayList<Tb_dynamic>>() {
-            }.getType();
-            List<Tb_dynamic> data = gson.fromJson(result, type);
-            if (isLoading) {
-                //如果是上拉加载
-                mDynamics.remove(mDynamics.size() - 1);
-                adapter.notifyItemRemoved(mDynamics.size());
-                mDynamics.addAll(data);
-                isLoading = false;
-            } else {
-                mDynamics.clear();
-                mDynamics.addAll(data);
-            }
-            start = mDynamics.size();
-            adapter.notifyDataSetChanged();
-
-        } else {
-            if (isLoading) {
-                //如果是上拉加载
-                mDynamics.remove(mDynamics.size() - 1);
-                adapter.notifyItemRemoved(mDynamics.size());
-                isLoading = false;
-            } else {
-                mDynamics.clear();
-                adapter.notifyDataSetChanged();
-            }
-            showSnackBarLong(coorDynamic, "暂无更多动态");
-        }
-        mHandler.sendEmptyMessageDelayed(HandlerKey.REFRESH_SUCCESS, 600);
+//        if (!"nothing".equals(result)) {
+//            Gson gson = new Gson();
+//            Type type = new TypeToken<ArrayList<Tb_dynamic>>() {
+//            }.getType();
+//            List<Tb_dynamic> data = gson.fromJson(result, type);
+//            if (isLoading) {
+//                //如果是上拉加载
+//                mDynamics.remove(mDynamics.size() - 1);
+//                adapter.notifyItemRemoved(mDynamics.size());
+//                mDynamics.addAll(data);
+//                isLoading = false;
+//            } else {
+//                mDynamics.clear();
+//                mDynamics.addAll(data);
+//            }
+//            start = mDynamics.size();
+//            adapter.notifyDataSetChanged();
+//
+//        } else {
+//            if (isLoading) {
+//                //如果是上拉加载
+//                mDynamics.remove(mDynamics.size() - 1);
+//                adapter.notifyItemRemoved(mDynamics.size());
+//                isLoading = false;
+//            } else {
+//                mDynamics.clear();
+//                adapter.notifyDataSetChanged();
+//            }
+//            showSnackBarLong(coorDynamic, "暂无更多动态");
+//        }
+//        mHandler.sendEmptyMessageDelayed(HandlerKey.REFRESH_SUCCESS, 600);
     }
 
     @Override

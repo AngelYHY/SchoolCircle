@@ -34,7 +34,7 @@ public class ActivityRecyclerAdapter
             //不在加载
             final View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_activity, parent, false);
-            return ActivityRecyclerViewHolder.newInstance(context,view);
+            return ActivityRecyclerViewHolder.newInstance(context, view);
         } else {
             //在加载
             final View view = LayoutInflater.from(parent.getContext())
@@ -51,16 +51,16 @@ public class ActivityRecyclerAdapter
             holder.setImageView(activity.getPicture());
             holder.setThemeText(activity.getTheme());
             if (activity.getSchoolName() != null) {
-                holder.setSchoolNameText("["+activity.getSchoolName()+"]");
+                holder.setSchoolNameText("[" + activity.getSchoolName() + "]");
             }
             holder.setTimeText(activity.getsDatetime());
 //            holder.setSponsorText(activity.getSponsor());
-            holder.setTvBeginText(activity.getActivityBegin().substring(5,16));
-            holder.setTvEndText(activity.getActivityEnd().substring(5,16));
+            holder.setTvBeginText(activity.getActivityBegin().substring(5, 16));
+            holder.setTvEndText(activity.getActivityEnd().substring(5, 16));
             holder.setPlaceText(activity.getPlace());
-            holder.setCbCommentText(activity.getCommentNum()+"");
-            holder.setCbJoinText(activity.getJoinNum()+"");
-            holder.setCbLikeText(activity.getLikeNum()+"");
+            holder.setCbCommentText(activity.getCommentNum() + "");
+            holder.setCbJoinText(activity.getJoinNum() + "");
+            holder.setCbLikeText(activity.getLikeNum() + "");
 
             String state = activity.getState();
             holder.setStateText(state);
@@ -83,7 +83,7 @@ public class ActivityRecyclerAdapter
                     @Override
                     public void onClick(View view) {
                         int position = holder.getLayoutPosition();
-                        listener.onItemClick(holder.mCardView,position);
+                        listener.onItemClick(holder.mCardView, position);
                     }
                 });
 
@@ -91,20 +91,20 @@ public class ActivityRecyclerAdapter
                     @Override
                     public void onClick(View view) {
                         int position = holder.getLayoutPosition();
-                        listener.onItemClick(holder.imageView,position);
+                        listener.onItemClick(holder.imageView, position);
                     }
                 });
             }
         } else {
-            ((LoadingViewHolder)viewHolder).progressBar.show();
+            ((LoadingViewHolder) viewHolder).progressBar.show();
         }
     }
 
     @Override
     public int getItemViewType(int position) {
-        if(activities.get(position)!=null){
+        if (activities.get(position) != null) {
             return super.getItemViewType(position);
-        }else{
+        } else {
             return loading;
         }
     }
@@ -127,14 +127,14 @@ public class ActivityRecyclerAdapter
     }
 
     //上拉加载的viewHolder
-    private class LoadingViewHolder extends RecyclerView.ViewHolder{
+    private class LoadingViewHolder extends RecyclerView.ViewHolder {
         public ContentLoadingProgressBar progressBar;
         public TextView textView;
 
-        public LoadingViewHolder(View view){
+        public LoadingViewHolder(View view) {
             super(view);
-            progressBar= (ContentLoadingProgressBar) view.findViewById(R.id.clp_loading);
-            textView=(TextView)view.findViewById(R.id.tv_loading);
+            progressBar = (ContentLoadingProgressBar) view.findViewById(R.id.clp_loading);
+            textView = (TextView) view.findViewById(R.id.tv_loading);
         }
     }
 

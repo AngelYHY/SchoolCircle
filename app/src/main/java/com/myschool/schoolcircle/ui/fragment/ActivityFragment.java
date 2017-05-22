@@ -23,32 +23,35 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.myschool.schoolcircle.adapter.ActivityRecyclerAdapter;
+import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.myschool.schoolcircle.adapter.ActivityRecyclerAdapterDemo;
 import com.myschool.schoolcircle.base.BaseFragment;
 import com.myschool.schoolcircle.config.Config;
 import com.myschool.schoolcircle.entity.Tb_activity;
-import com.myschool.schoolcircle.ui.activity.MainActivity;
 import com.myschool.schoolcircle.main.R;
+import com.myschool.schoolcircle.presenter.impl.ActivityPresenterImpl;
+import com.myschool.schoolcircle.ui.activity.MainActivity;
 import com.myschool.schoolcircle.ui.activity.school.activitys.ActivityDetailActivity;
 import com.myschool.schoolcircle.ui.activity.school.activitys.MyPublishActivityDetail;
 import com.myschool.schoolcircle.ui.activity.school.activitys.PublishActivity;
 import com.myschool.schoolcircle.utils.HandlerKey;
 import com.myschool.schoolcircle.utils.HidingScrollListener;
 import com.myschool.schoolcircle.utils.RefreshUtil;
-import com.myschool.schoolcircle.utils.SnackbarUtil;
 import com.myschool.schoolcircle.utils.ToastUtil;
 import com.myschool.schoolcircle.utils.ViewVisibleManager;
+import com.myschool.schoolcircle.view.ActivityView;
+import com.orhanobut.logger.Logger;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -58,17 +61,19 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 /**
  * Created by Mr.R on 2016/7/10.
  */
-public class ActivityFragment extends BaseFragment
-        implements SwipeRefreshLayout.OnRefreshListener{
+public class ActivityFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, ActivityView, BaseQuickAdapter.RequestLoadMoreListener {
 
-    @Bind(R.id.rv_activity)
-    RecyclerView rvActivity;
+    @Inject
+    ActivityPresenterImpl mPresenter;
+
+    @Bind(R.id.recycler_view)
+    RecyclerView mRecyclerView;
     @Bind(R.id.tb_activity)
     Toolbar tbActivity;
     @Bind(R.id.fab_create_activity)
     FloatingActionButton fabCreateActivity;
-    @Bind(R.id.srl_activity)
-    SwipeRefreshLayout srlActivity;
+    @Bind(R.id.refresh)
+    SwipeRefreshLayout mRefreshLayout;
     @Bind(R.id.cl_activity)
     CoordinatorLayout clActivity;
     @Bind(R.id.pv_activity)
@@ -76,8 +81,6 @@ public class ActivityFragment extends BaseFragment
 
     private View view;
 
-    private List<Tb_activity> activities;
-    private ActivityRecyclerAdapter adapter;
     private boolean isLoading = false;
     private int start = 0;
 
@@ -114,18 +117,19 @@ public class ActivityFragment extends BaseFragment
                     if (isShake) {
                         isShake = false;
                     }
-                    srlActivity.setRefreshing(false);
+                    mRefreshLayout.setRefreshing(false);
                     break;
 
                 case HandlerKey.REFRESH_FAIL:
                     if (isShake) {
                         isShake = false;
                     }
-                    srlActivity.setRefreshing(false);
+                    mRefreshLayout.setRefreshing(false);
                     break;
             }
         }
     };
+    private ActivityRecyclerAdapterDemo mAdapter;
 
 //    @Nullable
 //    @Override
@@ -195,12 +199,12 @@ public class ActivityFragment extends BaseFragment
                     + deltaZ * deltaZ) / timeInterval) * 100;
             if (speed >= SPEED_SHRESHOLD) {
                 if (onShack && shackSwitch != -1
-                        && !srlActivity.isRefreshing() && !isShake && !isLoading
+                        && !mRefreshLayout.isRefreshing() && !isShake && !isLoading
                         && application.getSettingConfig().getShack() != -1) {
                     isShake = true;
                     vibrator.vibrate(300);
-                    rvActivity.smoothScrollToPosition(0);
-                    doRefresh();
+                    mRecyclerView.smoothScrollToPosition(0);
+                    onRefresh();
                 }
             }
         }
@@ -211,7 +215,15 @@ public class ActivityFragment extends BaseFragment
         }
     };
 
+    @Override
+    protected void initInjector() {
+        super.initInjector();
+        mFragmentComponent.inject(this);
+        mIPresenter = mPresenter;
+    }
+
     protected void initView() {
+        mPresenter.attachView(this);
         init();
 
         //获取系统传感器服务
@@ -220,8 +232,9 @@ public class ActivityFragment extends BaseFragment
         vibrator = (Vibrator) activity.getSystemService(activity.VIBRATOR_SERVICE);
 
         //初始化下拉刷新控件
-        RefreshUtil.initRefreshView(srlActivity, this);
-        initRecyclerView();
+        RefreshUtil.initRefreshView(mRefreshLayout, this);
+        onRefresh();
+        initRV();
     }
 
     @Override
@@ -232,7 +245,7 @@ public class ActivityFragment extends BaseFragment
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_activity_tool,menu);
+        inflater.inflate(R.menu.menu_activity_tool, menu);
     }
 
     @Override
@@ -254,30 +267,47 @@ public class ActivityFragment extends BaseFragment
     }
 
     //初始化列表
-    private void initRecyclerView() {
-        rvActivity.setLayoutManager(new LinearLayoutManager(activity));
-        activities = new ArrayList<>();
+    private void initRV() {
+        Logger.e("initRv Activity");
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+//        activities = new ArrayList<>();
+//
+//        adapter = new ActivityRecyclerAdapter(activity, activities);
 
-        adapter = new ActivityRecyclerAdapter(activity, activities);
+        mAdapter = new ActivityRecyclerAdapterDemo(R.layout.item_activity);
 
-        //活动item的点击事件
-        adapter.setOnItemClickListener(new ActivityRecyclerAdapter.OnItemClickListener() {
+        mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                switch (view.getId()) {
-                    case R.id.cv_activity:
-                        intent2Detail(activities.get(position));
-                        break;
-                    case R.id.iv_activity:
-                        String image = activities.get(position).getPicture();
-                        pvActivity.setVisibility(View.VISIBLE);
-                        x.image().bind(pvActivity, image, options);
-                        break;
-                    default:
-                        break;
-                }
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                intent2Detail(((Tb_activity) adapter.getItem(position)));
+            }
+
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                String image = ((Tb_activity) adapter.getItem(position)).getPicture();
+                pvActivity.setVisibility(View.VISIBLE);
+                Glide.with(mContext).load(image).into(pvActivity);
             }
         });
+
+//        //活动item的点击事件
+//        adapter.setOnItemClickListener(new ActivityRecyclerAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                switch (view.getId()) {
+//                    case R.id.cv_activity:
+//                        intent2Detail(activities.get(position));
+//                        break;
+//                    case R.id.iv_activity:
+//                        String image = activities.get(position).getPicture();
+//                        pvActivity.setVisibility(View.VISIBLE);
+//                        x.image().bind(pvActivity, image, options);
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//        });
 
         pvActivity.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
             @Override
@@ -286,10 +316,13 @@ public class ActivityFragment extends BaseFragment
             }
         });
 
-        rvActivity.setAdapter(adapter);
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.openLoadAnimation();
+        mAdapter.setPreLoadNumber(PAGE_SIZE);
+        mAdapter.setOnLoadMoreListener(this, mRecyclerView);
 
         //上滑下滑列表隐藏显示
-        rvActivity.setOnScrollListener(new HidingScrollListener() {
+        mRecyclerView.addOnScrollListener(new HidingScrollListener() {
             @Override
             public void onHide() {
                 hideView();
@@ -300,24 +333,24 @@ public class ActivityFragment extends BaseFragment
                 showView();
             }
         });
-
-        final LinearLayoutManager manager = (LinearLayoutManager) rvActivity.getLayoutManager();
-        rvActivity.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (dy > 50) {
-                    int lastItemIndex = manager.findLastVisibleItemPosition();
-                    //滑动到最后一个并且状态不是加载中,执行加载更多，isLoading默认值false
-                    if (lastItemIndex >= activities.size() - 1 && !isLoading) {
-                        loadMore();
-                    }
-                }
-            }
-        });
-
-        doRefresh();
+//
+//        final LinearLayoutManager manager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+//        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//
+//                if (dy > 50) {
+//                    int lastItemIndex = manager.findLastVisibleItemPosition();
+//                    //滑动到最后一个并且状态不是加载中,执行加载更多，isLoading默认值false
+//                    if (lastItemIndex >= activities.size() - 1 && !isLoading) {
+//                        loadMore();
+//                    }
+//                }
+//            }
+//        });
+//
+//        doRefresh();
     }
 
     //显示
@@ -343,19 +376,19 @@ public class ActivityFragment extends BaseFragment
 
     //加载更多
     public void loadMore() {
-        activities.add(null);//显示加载中的布局,对应MyAdapter的getItemViewType()方法
-        adapter.notifyItemInserted(activities.size() - 1);
-        isLoading = true;
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    postAllActivityData(activities.size(), type);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
+//        activities.add(null);//显示加载中的布局,对应MyAdapter的getItemViewType()方法
+//        adapter.notifyItemInserted(activities.size() - 1);
+//        isLoading = true;
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                try {
+//                    postAllActivityData(activities.size(), type);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }.start();
     }
 
     //向服务器请求获取所有活动信息
@@ -377,9 +410,9 @@ public class ActivityFragment extends BaseFragment
                     params.addBodyParameter("type", type);
                     params.addBodyParameter("school", schoolName);
                 } else {
-                    srlActivity.setRefreshing(false);
+                    mRefreshLayout.setRefreshing(false);
                     this.type = GET_ALL_ACTIVITY;
-                    ToastUtil.showToast(activity,"你还没有设置学校信息", Toast.LENGTH_LONG);
+                    ToastUtil.showToast(activity, "你还没有设置学校信息", Toast.LENGTH_LONG);
                     return;
                 }
                 break;
@@ -429,42 +462,42 @@ public class ActivityFragment extends BaseFragment
 
     //加载数据
     private void loadData(String result) {
-        if (!"nothing".equals(result)) {
-            Gson gson = new Gson();
-            Type type = new TypeToken<ArrayList<Tb_activity>>() {
-            }.getType();
-            List<Tb_activity> data = gson.fromJson(result, type);
-            if (isLoading) {
-                //如果是上拉加载
-                activities.remove(activities.size() - 1);
-                adapter.notifyItemRemoved(activities.size());
-                activities.addAll(data);
-                isLoading = false;
-            } else {
-                activities.clear();
-                activities.addAll(data);
-            }
-//            start = activities.size();
-            adapter.notifyDataSetChanged();
-
-        } else {
-            if (isLoading) {
-                //如果是上拉加载
-                activities.remove(activities.size() - 1);
-                adapter.notifyItemRemoved(activities.size());
-                isLoading = false;
-            } else {
-                activities.clear();
-                adapter.notifyDataSetChanged();
-            }
-            SnackbarUtil.showSnackBarLong(clActivity,"暂无更多活动");
-        }
-        mHandler.sendEmptyMessageDelayed(HandlerKey.REFRESH_SUCCESS, 600);
+//        if (!"nothing".equals(result)) {
+//            Gson gson = new Gson();
+//            Type type = new TypeToken<ArrayList<Tb_activity>>() {
+//            }.getType();
+//            List<Tb_activity> data = gson.fromJson(result, type);
+//            if (isLoading) {
+//                //如果是上拉加载
+//                activities.remove(activities.size() - 1);
+//                adapter.notifyItemRemoved(activities.size());
+//                activities.addAll(data);
+//                isLoading = false;
+//            } else {
+//                activities.clear();
+//                activities.addAll(data);
+//            }
+////            start = activities.size();
+//            adapter.notifyDataSetChanged();
+//
+//        } else {
+//            if (isLoading) {
+//                //如果是上拉加载
+//                activities.remove(activities.size() - 1);
+//                adapter.notifyItemRemoved(activities.size());
+//                isLoading = false;
+//            } else {
+//                activities.clear();
+//                adapter.notifyDataSetChanged();
+//            }
+//            SnackbarUtil.showSnackBarLong(clActivity, "暂无更多活动");
+//        }
+//        mHandler.sendEmptyMessageDelayed(HandlerKey.REFRESH_SUCCESS, 600);
     }
 
     //按照用户选择类型获取评论
     private void getAllActivityByType() {
-        srlActivity.setRefreshing(true);
+        mRefreshLayout.setRefreshing(true);
         start = 0;
         postAllActivityData(start, type);
         switch (type) {
@@ -508,31 +541,57 @@ public class ActivityFragment extends BaseFragment
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == activity.RESULT_OK) {
-            doRefresh();
+            onRefresh();
         }
     }
 
     //下拉刷新事件
     @Override
     public void onRefresh() {
-        new Thread(new Runnable() {
+        Logger.e("onRefresh Activity");
+        start = 0;
+        mRefreshLayout.post(new Runnable() {
             @Override
             public void run() {
-                try {
-                    doRefresh();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                mHandler.sendEmptyMessageDelayed(HandlerKey.REFRESH_SUCCESS, 600);
+                mRefreshLayout.setRefreshing(true);
             }
-        }).start();
+        });
+
+        onLoadMoreRequested();
+//        x.http().post(params, new Callback.CacheCallback<String>() {
+//                    @Override
+//                    public boolean onCache(String result) {
+//                        return false;
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(String result) {
+//                        loadData(result);
+//                        if ("nothing".equals(result)) {
+//                            if (!toolbarVisible && !bottomNavigationVisible
+//                                    && !fabButtonVisible) {
+//                                showView();
+//                            }
+//                        }
+//                    }
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    doRefresh();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//                mHandler.sendEmptyMessageDelayed(HandlerKey.REFRESH_SUCCESS, 600);
+//            }
+//        }).start();
     }
 
     //刷新数据
     private void doRefresh() {
         start = 0;
-        if (!srlActivity.isRefreshing()) {
-            srlActivity.setRefreshing(true);
+        if (!mRefreshLayout.isRefreshing()) {
+            mRefreshLayout.setRefreshing(true);
         }
         postAllActivityData(start, type);
     }
@@ -556,5 +615,57 @@ public class ActivityFragment extends BaseFragment
     public void onPause() {
         super.onPause();
         onShack = false;
+    }
+
+    @Override
+    public void response(List<Tb_activity> list, boolean hasMore) {
+        mRefreshLayout.post(new Runnable() {
+
+            @Override
+            public void run() {
+                mRefreshLayout.setRefreshing(false);
+            }
+        });
+        if (isShake) {
+            isShake = false;
+        }
+        if (start == 0) {
+            mAdapter.setNewData(list);
+        } else {
+            mAdapter.addData(list);
+            mAdapter.loadMoreComplete();
+        }
+
+        if (!hasMore) {
+            mAdapter.loadMoreEnd();
+        }
+        start = mAdapter.getData().size();
+    }
+
+    @Override
+    public void onLoadMoreRequested() {
+        String schoolName = null;
+        String username = null;
+
+        switch (type) {
+            case GET_ALL_ACTIVITY_IN_MY_SCHOOL:
+                schoolName = application.getMyInfo().getRegion();
+                //只看本校
+                if (schoolName.isEmpty()) {
+                    this.type = GET_ALL_ACTIVITY;
+                    ToastUtil.showToast(activity, "你还没有设置学校信息", Toast.LENGTH_LONG);
+                }
+                break;
+            case GET_MY_JOIN_ACTIVITY:
+            case GET_MY_PUBLISH_ACTIVITY:
+                username = application.getMyInfo().getUserName();
+                //我的参与，我的发布
+//                params.addBodyParameter("type", type);
+//                params.addBodyParameter("username", application.getMyInfo().getUserName());
+                break;
+
+        }
+
+        mPresenter.getActivity(type, start + "", schoolName, username);
     }
 }

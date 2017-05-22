@@ -1,5 +1,6 @@
 package com.myschool.schoolcircle.core;
 
+import com.myschool.schoolcircle.bean.ActivityResponse;
 import com.myschool.schoolcircle.bean.Base;
 import com.myschool.schoolcircle.bean.DynamicResponse;
 import com.myschool.schoolcircle.bean.LoginResponse;
@@ -39,5 +40,10 @@ public interface RetrofitService {
     @FormUrlEncoded
     @POST("Dynamic")
     Observable<DynamicResponse> getDynamic(@Field("type") String type, @Field("start") String start, @Field("schoolName") String schoolName);
+
+    //获取活动信息
+    @FormUrlEncoded
+    @POST("Activity")
+    Observable<ActivityResponse> getActivities(@Field("type") String type, @Field("start") String start, @Field("school") String schoolName, @Field("username") String username);
 
 }

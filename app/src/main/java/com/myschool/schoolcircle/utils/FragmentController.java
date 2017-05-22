@@ -28,8 +28,8 @@ public class FragmentController {
         initFragment();
     }
 
-    public static FragmentController getInstance(int containerId,FragmentManager manager) {
-        instance = new FragmentController(containerId,manager);
+    public static FragmentController getInstance(int containerId, FragmentManager manager) {
+        instance = new FragmentController(containerId, manager);
         return instance;
     }
 
@@ -42,7 +42,7 @@ public class FragmentController {
 
         FragmentTransaction transaction = manager.beginTransaction();
         for (Fragment fragment : fragments) {
-            transaction.add(containerId,fragment);
+            transaction.add(containerId, fragment);
             transaction.hide(fragment);
         }
 
@@ -71,6 +71,6 @@ public class FragmentController {
     }
 
     public Fragment getFragment(int position) {
-        return fragments==null ? null : fragments.get(position);
+        return fragments == null ? null : fragments.get(position);
     }
 }
